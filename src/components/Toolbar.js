@@ -1,31 +1,25 @@
 import React, {Component} from 'react';
 import AppState from '../models/AppState';
 
-import colors from '../helpers/colors';
+import Colors from '../helpers/Colors';
 import View from './platform/web/View';
+import Text from './platform/web/Text';
 import Button from './platform/web/Button';
 
 import InstanceListenerComponent from './InstanceListenerComponent';
 
-import Position from 'react-icons/lib/io/arrow-move';
-import Box from 'react-icons/lib/io/android-contract';
-import Size from 'react-icons/lib/io/ios-crop-strong';
-
-const ICON_SIZE = 30;
 const PADDING = 10;
 
 //TODO: cross platform this.
 const style = {
   boxSizing: 'border-box',
-  backgroundColor: colors.toolbarBackground,
-  position: 'absolute',
-  color: colors.buttonText,
-  zIndex: 1000,
-  top: 0,
-  left: 0,
+  backgroundColor: Colors.background,
+  color: Colors.reverseText,
   height: '100vh',
-  width: ICON_SIZE * 2 + PADDING*7,
-  padding: PADDING
+  width: 100,
+  padding: PADDING,
+  borderRight: `1px solid ${Colors.background.darken()}`,
+  opacity: 0.9
 };
 
 const MODES = ['position', 'size', 'box'];
@@ -94,7 +88,7 @@ export default class Toolbar extends InstanceListenerComponent {
               selected={AppState.toolbar.position}
               disabled={!this.state.visible}
               onPress={(e) => this.toggleOff('position')}>
-        <Position size={ICON_SIZE}/>
+        <Text>Move</Text>
       </Button>
     );
   }
@@ -109,7 +103,7 @@ export default class Toolbar extends InstanceListenerComponent {
               selected={AppState.toolbar.size}
               disabled={!this.state.visible}
               onPress={(e) => this.toggleOff('size')}>
-        <Size size={ICON_SIZE}/>
+        <Text>Resize</Text>
       </Button>
     );
   }
@@ -124,7 +118,7 @@ export default class Toolbar extends InstanceListenerComponent {
               selected={AppState.toolbar.box}
               disabled={!this.state.visible}
               onPress={(e) => this.toggleOff('box')}>
-        <Box size={ICON_SIZE}/>
+        <Text>Margin / Padding</Text>
       </Button>
     );
   }

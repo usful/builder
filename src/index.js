@@ -10,6 +10,8 @@ import View from './components/platform/web/View';
 import Grid from './components/Grid';
 import StyleBar from './components/StyleBar';
 import Toolbar from './components/Toolbar';
+import Hierarchy from './components/Hierarchy';
+import Menu from './components/Menu';
 
 const styles = {
   container: {
@@ -21,6 +23,15 @@ const styles = {
     boxSizing: 'border-box',
     position: 'relative',
     overflow: 'hidden'
+  },
+  leftToolbar: {
+    display: 'flex',
+    flexDirection: 'row',
+    zIndex: 1000,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    height: '100vh',
   }
 };
 
@@ -111,18 +122,27 @@ class App extends Component {
     }
   }
 
+  showMenu(opts) {
+    this.refs.menu.show(opts);
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <Grid ref="grid">
           <BlockView ref="block"
                      block={this.state.block}
+                     onShowMenu={(opts) => this.showMenu(opts)}
                      onMouseDown={(e) => this.onMouseDown(e)}
                      onMouseMove={(e) => this.onMouseMove(e)}
                      onMouseUp={(e) => this.onMouseUp(e)}/>
         </Grid>
-        <Toolbar ref="toolbar"/>
+        <View style={styles.leftToolbar}>
+          <Hierarchy ref="hierarchy" block={this.state.block} onShowMenu={(opts) => this.showMenu(opts)}/>
+          <Toolbar ref="toolbar"/>
+        </View>
         <StyleBar ref="styleBar"/>
+        <Menu ref="menu"/>
       </View>
     );
   }

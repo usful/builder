@@ -10,11 +10,11 @@ import Outline from './Outline';
 import Ruler from './Ruler';
 
 const OUTLINE_DEFAULT = {
-  top: 100,
-  right: 100,
-  bottom: 100,
-  left: 100,
-  visible: true
+  top: 0,
+  right: 0,
+  bottom: 0,
+  left: 0,
+  visible: false
 };
 
 const OUTLINE_SIZE = 10;
@@ -111,22 +111,30 @@ export default class Grid extends InstanceListenerComponent {
 
 
   onBlockSelected() {
+  }
+
+  onSelectedBlockContainerSet() {
     this.updateOutlines();
   }
 
   onBlockUnselected() {
-    this.setState({
-      __ts: Date.now(),
-      outlineTop: {... OUTLINE_DEFAULT},
-      outlineRight: {... OUTLINE_DEFAULT},
-      outlineBottom: {... OUTLINE_DEFAULT},
-      outlineLeft: {... OUTLINE_DEFAULT}
-    });
+    setTimeout(() => {
+      if (!AppState.selectedBlock) {
+        this.setState({
+          __ts: Date.now(),
+          outlineTop: {... OUTLINE_DEFAULT},
+          outlineRight: {... OUTLINE_DEFAULT},
+          outlineBottom: {... OUTLINE_DEFAULT},
+          outlineLeft: {... OUTLINE_DEFAULT}
+        });
+      }
+    }, AppState.constructor.NOTIFY_INTERVAL*2);
   }
 
   componentWillMount() {
     super.componentWillMount();
     this.blockSelectedListener = AppState.addListener('blockSelected', this.onBlockSelected.bind(this));
+    this.selectedBlockContainerSetListener = AppState.addListener('selectedBlockContainerSet', this.onSelectedBlockContainerSet.bind(this));
     this.blockUnselectedListener = AppState.addListener('blockUnselected', this.onBlockUnselected.bind(this));
   }
 
@@ -134,17 +142,20 @@ export default class Grid extends InstanceListenerComponent {
     super.componentWillUnmount();
     this.blockSelectedListener.remove();
     this.blockUnselectedListener.remove();
+    this.selectedBlockContainerSetListener.remove();
   }
 
   onMouseDown(e) {
-    this.drag = {
-      x: e.clientX,
-      y: e.clientY,
-      dx: 0,
-      dy: 0
-    };
+    if (e.button === 0) {
+      this.drag = {
+        x: e.clientX,
+        y: e.clientY,
+        dx: 0,
+        dy: 0
+      };
 
-    AppState.grid.isDragging = true;
+      AppState.grid.isDragging = true;
+    }
   }
 
   onMouseMove(e) {

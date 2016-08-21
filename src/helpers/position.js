@@ -1,4 +1,8 @@
 export default function getPosition(el) {
+  if (el.container) {
+    el = el.container;
+  }
+
   let rect = el.getBoundingClientRect();
 
   let ret = {

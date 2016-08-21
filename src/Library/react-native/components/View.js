@@ -12,11 +12,44 @@ export default class View extends PropertyListenerComponent {
     block: {},
     onMouseDown: (e) => {},
     onMouseMove: (e) => {},
-    onMouseUp: (e) => {}
+    onMouseUp: (e) => {},
+    onShowMenu: (opts) => {}
   };
 
   constructor(props) {
     super(props);
+  }
+
+  componentWillMount() {
+    super.componentWillMount();
+    this.blockSelectedListener = AppState.addListener('blockSelected', this.onBlockSelected.bind(this));
+  }
+
+  componentWillUnmount() {
+    super.componentWillUnmount();
+    this.blockSelectedListener.remove();
+  }
+
+  onBlockSelected(block) {
+    if (block === this.props.block) {
+      AppState.setSelectedBlockContainer(this.refs.container);
+    }
+  }
+
+  showMenu(e) {
+    if (AppState.selectedBlock !== this.props.block) {
+      AppState.selectBlock(this.props.block);
+    }
+
+    this.props.onShowMenu({
+      top: e.clientY,
+      left: e.clientX,
+      block: this.props.block
+    });
+
+    e.stopPropagation();
+    e.preventDefault();
+
   }
 
   get style() {
@@ -31,6 +64,7 @@ export default class View extends PropertyListenerComponent {
     if (this.props.block && this.props.block.children) {
       return this.props.block.children.map(child =>
         <View key={child.key}
+              onContextMenu={(e) => this.showMenu(e)}
               onMouseDown={this.props.onMouseDown}
               onMouseMove={this.props.onMouseMove}
               onMouseUp={this.props.onMouseUp}
@@ -40,7 +74,7 @@ export default class View extends PropertyListenerComponent {
     return null;
   }
 
-  onBlockSelected(e) {
+  selectBlock(e) {
     e.stopPropagation();
 
     if (AppState.toolbar.isDragging) {
@@ -48,14 +82,14 @@ export default class View extends PropertyListenerComponent {
     }
 
     if (AppState.selectedBlock === this.props.block) {
-      AppState.selectedBlock = null;
-      AppState.selectedContainer = null;
-      AppState.emit('blockUnselected', this.props.block);
+      AppState.unselectBlock();
     } else {
-      AppState.selectedBlock = this.props.block;
-      AppState.selectedContainer = this.refs.container;
-      AppState.emit('blockSelected', this.props.block);
+      AppState.selectBlock(this.props.block);
     }
+  }
+
+  get container() {
+    return this.refs.container;
   }
 
   render() {
@@ -65,7 +99,8 @@ export default class View extends PropertyListenerComponent {
            onMouseDown={this.props.onMouseDown}
            onMouseMove={this.props.onMouseMove}
            onMouseUp={this.props.onMouseUp}
-           onClick={(e) => this.onBlockSelected(e)}>
+           onContextMenu={this.props.onContextMenu || this.showMenu.bind(this)}
+           onClick={(e) => this.selectBlock(e)}>
         {this.renderChildren()}
       </div>
     );

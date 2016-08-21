@@ -1,20 +1,20 @@
 import React, {Component} from 'react';
 
-import colors from '../../../helpers/colors';
+import Colors from '../../../helpers/Colors';
 
 const styles = {
   button: {
     padding: 5,
-    backgroundColor: colors.buttonBackground,
+    backgroundColor: Colors.background,
     borderRadius: 5,
     border: '1px solid rgba(255,255,255,0.5)',
     margin: 5,
-    color: colors.buttonText,
+    color: Colors.reverseText,
     cursor: 'pointer',
     outline: 'none'
   },
   selected: {
-    backgroundColor: colors.selected,
+    backgroundColor: Colors.active,
     border: '1px solid rgba(255,255,255,0.75)'
   },
   disabled: {

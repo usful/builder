@@ -39,6 +39,27 @@ const AppStateModel = new Models('AppState', {
   selectedContainer: Object,
   toolbar: ToolbarStateModel,
   grid: GridStateModel
+}, {
+  setSelectedBlockContainer(container) {
+    this.selectedContainer = container;
+    this.emit('selectedBlockContainerSet', this.selectedContainer);
+  },
+  selectBlock(block) {
+    if (this.selectedBlock && this.selectedBlock !== block) {
+      this.unselectBlock();
+    }
+
+    this.selectedBlock = block;
+    this.emit('blockSelected', this.selectedBlock);
+  },
+  unselectBlock() {
+    if (this.selectedBlock) {
+      this.emit('blockUnselected', this.selectedBlock);
+    }
+
+    this.selectedBlock = null;
+    this.selectedContainer = null;
+  }
 });
 
 AppStateModel.notifyInterval = NOTIFY_INTERVAL;

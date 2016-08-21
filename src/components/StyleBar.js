@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import AppState from '../models/AppState';
-import colors from '../helpers/colors';
+import Colors from '../helpers/Colors';
 
 import View from './platform/web/View';
 import InstanceListenerComponent from './InstanceListenerComponent';
@@ -12,8 +12,8 @@ import BoxToolbar from './toolbars/BoxToolbar';
 //TODO: cross platform this.
 const style = {
   boxSizing: 'border-box',
-  backgroundColor: colors.toolbarBackground,
-  color: colors.buttonText,
+  backgroundColor: Colors.background,
+  color: Colors.reverseText,
   position: 'absolute',
   zIndex: 1000,
   top: 20,

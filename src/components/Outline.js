@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import colors from '../helpers/colors';
+import Colors from '../helpers/Colors';
 import View from './platform/web/View';
 
 //TODO: cross platform this.
@@ -30,7 +30,7 @@ export default class Outline extends Component {
   get style() {
     return {
       ... style,
-      backgroundColor: this.props.active ? colors.selected : colors.toolbarBackground,
+      backgroundColor: this.props.active ? Colors.active.css() : Colors.background.css(),
       width: this.props.width,
       height: this.props.height,
       top: this.props.top,

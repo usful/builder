@@ -29,12 +29,16 @@ export default class View extends Component {
     draggable: false
   };
 
+  get container() {
+    return this.refs.container;
+  }
   constructor(props) {
     super(props);
   }
 
   render() {
-    return <div style={this.props.style}
+    return <div ref="container"
+                style={this.props.style}
                 draggable={this.props.draggable}
                 onClick={this.props.onClick}
                 onContextMenu={this.props.onContextMenu}

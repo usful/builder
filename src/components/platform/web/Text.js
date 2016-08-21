@@ -11,7 +11,11 @@ export default class Text extends Component {
     super(props);
   }
 
+  get container() {
+    return this.refs.container;
+  }
+
   render() {
-    return <span style={this.props.style}>{this.props.children}</span>;
+    return <span ref="container" style={this.props.style}>{this.props.children}</span>;
   }
 }
