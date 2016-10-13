@@ -1,0 +1,5 @@
+const NOTIFY_INTERVAL = 25; //40fps
+
+export default {
+  NOTIFY_INTERVAL: NOTIFY_INTERVAL
+}

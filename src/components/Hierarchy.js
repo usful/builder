@@ -2,7 +2,7 @@
 
 import React, {Component} from 'react';
 
-import AppState from '../models/AppState';
+import AppState from '../AppState';
 
 import Colors from '../helpers/Colors';
 
@@ -11,27 +11,28 @@ import Text from './platform/web/Text';
 
 const styles = {
   row: {
+    color: Colors.text.css(),
     display: 'block',
     padding: 8,
     marginLeft: 5,
     marginTop: 5,
     borderRadius: 5,
-    background: Colors.background.brighten().alpha(0.5).css(),
-    border: `1px solid ${Colors.border.alpha(0.5).css()}`,
+    background: Colors.softBackground.css(),
+    border: `1px solid ${Colors.border.css()}`,
     cursor: 'pointer',
     userSelect: 'none'
   },
   rowSelected: {
     background: Colors.active.css(),
-    border: `1px solid ${Colors.border.alpha(0.9).css()}`,
+    color: Colors.reverseText.css(),
+    border: `1px solid ${Colors.border.css()}`,
   },
   container: {
     boxSizing: 'border-box',
-    backgroundColor: Colors.background.css(),
-    color: Colors.reverseText.css(),
+    backgroundColor: Colors.softBackground.css(),
     height: '100vh',
     padding: 10,
-    borderRight: `1px solid ${Colors.background.darken()}`
+    borderRight: `1px solid ${Colors.border.css()}`
   }
 };
 
@@ -90,7 +91,8 @@ class BlockRow extends Component {
       AppState.selectBlock(this.props.block);
     }
 
-    this.props.onShowMenu({
+
+    AppState.blockMenu.show({
       top: e.clientY,
       left: e.clientX,
       block: this.props.block
@@ -130,8 +132,7 @@ class BlockRow extends Component {
 
 export default class Hierarchy extends Component {
   static defaultProps = {
-    block: {},
-    onShowMenu: (opts) => {}
+    block: {}
   };
 
   constructor(props) {
@@ -141,7 +142,7 @@ export default class Hierarchy extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <BlockRow block={this.props.block} onShowMenu={this.props.onShowMenu}/>
+        <BlockRow block={this.props.block}/>
       </View>
     );
   }

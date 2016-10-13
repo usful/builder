@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import AppState from '../models/AppState';
+import AppState from '../AppState';
 
 import Colors from '../helpers/Colors';
 import View from './platform/web/View';
@@ -13,13 +13,12 @@ const PADDING = 10;
 //TODO: cross platform this.
 const style = {
   boxSizing: 'border-box',
-  backgroundColor: Colors.background,
-  color: Colors.reverseText,
+  backgroundColor: Colors.softBackground,
+  color: Colors.text,
   height: '100vh',
   width: 100,
   padding: PADDING,
-  borderRight: `1px solid ${Colors.background.darken()}`,
-  opacity: 0.9
+  borderRight: `1px solid ${Colors.border}`
 };
 
 const MODES = ['position', 'size', 'box'];

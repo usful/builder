@@ -1,39 +1,13 @@
 'use strict';
 
 import React, {Component} from 'react';
-import AppState from '../../../models/AppState';
+import AppState from '../../../AppState';
 
-import PropertyListenerComponent from '../../../components/PropertyListenerComponent';
+import BaseBlockComponent from '../../../components/BaseBlockComponent';
 
-export default class View extends PropertyListenerComponent {
-  static listen = 'block';
-
-  static defaultProps = {
-    block: {},
-    onMouseDown: (e) => {},
-    onMouseMove: (e) => {},
-    onMouseUp: (e) => {},
-    onShowMenu: (opts) => {}
-  };
-
+export default class View extends BaseBlockComponent {
   constructor(props) {
     super(props);
-  }
-
-  componentWillMount() {
-    super.componentWillMount();
-    this.blockSelectedListener = AppState.addListener('blockSelected', this.onBlockSelected.bind(this));
-  }
-
-  componentWillUnmount() {
-    super.componentWillUnmount();
-    this.blockSelectedListener.remove();
-  }
-
-  onBlockSelected(block) {
-    if (block === this.props.block) {
-      AppState.setSelectedBlockContainer(this.refs.container);
-    }
   }
 
   showMenu(e) {
@@ -41,7 +15,7 @@ export default class View extends PropertyListenerComponent {
       AppState.selectBlock(this.props.block);
     }
 
-    this.props.onShowMenu({
+    AppState.blockMenu.show({
       top: e.clientY,
       left: e.clientX,
       block: this.props.block
@@ -49,7 +23,6 @@ export default class View extends PropertyListenerComponent {
 
     e.stopPropagation();
     e.preventDefault();
-
   }
 
   get style() {
@@ -64,7 +37,6 @@ export default class View extends PropertyListenerComponent {
     if (this.props.block && this.props.block.children) {
       return this.props.block.children.map(child =>
         <View key={child.key}
-              onContextMenu={(e) => this.showMenu(e)}
               onMouseDown={this.props.onMouseDown}
               onMouseMove={this.props.onMouseMove}
               onMouseUp={this.props.onMouseUp}
@@ -88,10 +60,6 @@ export default class View extends PropertyListenerComponent {
     }
   }
 
-  get container() {
-    return this.refs.container;
-  }
-
   render() {
     return (
       <div ref="container"
@@ -99,7 +67,7 @@ export default class View extends PropertyListenerComponent {
            onMouseDown={this.props.onMouseDown}
            onMouseMove={this.props.onMouseMove}
            onMouseUp={this.props.onMouseUp}
-           onContextMenu={this.props.onContextMenu || this.showMenu.bind(this)}
+           onContextMenu={(e) => this.showMenu(e)}
            onClick={(e) => this.selectBlock(e)}>
         {this.renderChildren()}
       </div>

@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import Models from 'models';
 
-import AppState from './models/AppState';
-import ViewModel from './Library/react-native/models/ViewModel';
+import AppState from './AppState';
+import ViewModel from './Library/react-native/models/ViewBlockModel';
 import BlockView from './Library/react-native/components/View';
 
 import View from './components/platform/web/View';
@@ -76,22 +76,24 @@ class App extends Component {
   }
 
   onMouseDown(e) {
-    this.drag = {
-      x: e.clientX,
-      y: e.clientY,
-      dx: 0,
-      dy: 0
-    };
+    if (e.button === 0) {
+      this.drag = {
+        x: e.clientX,
+        y: e.clientY,
+        dx: 0,
+        dy: 0
+      };
 
 
-    if (AppState.toolbar.position) {
-      AppState.toolbar.isDragging = true;
-      e.stopPropagation();
-    }
+      if (AppState.toolbar.position) {
+        AppState.toolbar.isDragging = true;
+        e.stopPropagation();
+      }
 
-    //This is the top level block, stop propagation, stops the grid from being draggable while click on a block
-    if (e.nativeEvent.target === this.refs.block.refs.container) {
-      e.stopPropagation();
+      //This is the top level block, stop propagation, stops the grid from being draggable while click on a block
+      if (e.nativeEvent.target === this.refs.block.refs.container) {
+        e.stopPropagation();
+      }
     }
   }
 
@@ -122,23 +124,18 @@ class App extends Component {
     }
   }
 
-  showMenu(opts) {
-    this.refs.menu.show(opts);
-  }
-
   render() {
     return (
       <View style={styles.container}>
         <Grid ref="grid">
           <BlockView ref="block"
                      block={this.state.block}
-                     onShowMenu={(opts) => this.showMenu(opts)}
                      onMouseDown={(e) => this.onMouseDown(e)}
                      onMouseMove={(e) => this.onMouseMove(e)}
                      onMouseUp={(e) => this.onMouseUp(e)}/>
         </Grid>
         <View style={styles.leftToolbar}>
-          <Hierarchy ref="hierarchy" block={this.state.block} onShowMenu={(opts) => this.showMenu(opts)}/>
+          <Hierarchy ref="hierarchy" block={this.state.block}/>
           <Toolbar ref="toolbar"/>
         </View>
         <StyleBar ref="styleBar"/>

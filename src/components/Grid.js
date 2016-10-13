@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import AppState from '../models/AppState';
+import AppState from '../AppState';
 import position from '../helpers/position';
 
 

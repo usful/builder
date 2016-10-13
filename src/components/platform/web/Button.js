@@ -5,17 +5,17 @@ import Colors from '../../../helpers/Colors';
 const styles = {
   button: {
     padding: 5,
-    backgroundColor: Colors.background,
+    backgroundColor: Colors.softBackground,
     borderRadius: 5,
-    border: '1px solid rgba(255,255,255,0.5)',
+    border: `1px solid ${Colors.border}`,
     margin: 5,
-    color: Colors.reverseText,
+    color: Colors.text,
     cursor: 'pointer',
     outline: 'none'
   },
   selected: {
-    backgroundColor: Colors.active,
-    border: '1px solid rgba(255,255,255,0.75)'
+    color: Colors.reverseText,
+    backgroundColor: Colors.active
   },
   disabled: {
     opacity: 0.5
