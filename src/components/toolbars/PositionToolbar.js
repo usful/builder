@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import PropertyListenerComponent from '../PropertyListenerComponent';
 
 const styles = {
   input: {
@@ -7,7 +6,7 @@ const styles = {
   }
 };
 
-export default class PositionToolbar extends PropertyListenerComponent {
+export default class PositionToolbar extends Component {
   static listen = ['style'];
 
   static defaultProps = {

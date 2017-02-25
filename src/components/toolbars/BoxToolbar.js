@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import PropertyListenerComponent from '../PropertyListenerComponent';
 
 //'marginTop', 'marginRight', 'marginBottom', 'marginLeft', 'paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft'
 
@@ -9,8 +8,7 @@ const styles = {
   }
 };
 
-export default class BoxToolbar extends PropertyListenerComponent {
-  static listen = ['style'];
+export default class BoxToolbar extends Component {
 
   static defaultProps = {
     style: {}

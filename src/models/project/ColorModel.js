@@ -1,9 +1,10 @@
 "use strict";
 
 import Models from 'models';
+const {Document, Structure, Validators, utils} = Models;
 import colorValidator from '../../helpers/validators/color';
 
-const ColorModel = new Models('Color', {
+const ColorModel = new Structure('Color', {
   _id: String,
   _created: Date,
   _updated: Date,
@@ -11,7 +12,7 @@ const ColorModel = new Models('Color', {
   color: {
     type: String,
     validators: [
-      Models.Validation.required,
+      Validators.required,
       colorValidator
     ]
   }

@@ -27,6 +27,8 @@ export default class View extends BaseBlockComponent {
 
   get style() {
     if (this.props.block && this.props.block.style) {
+      console.log(this.props.block.style);
+      
       return this.props.block.style.toGridStyle(AppState);
     }
 

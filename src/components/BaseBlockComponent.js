@@ -3,11 +3,7 @@
 import React, {Component} from 'react';
 import AppState from '../AppState';
 
-import PropertyListenerComponent from './PropertyListenerComponent';
-
-export default class BaseBlockComponent extends PropertyListenerComponent {
-  static listen = 'block';
-
+export default class BaseBlockComponent extends Component {
   static defaultProps = {
     block: {},
     onMouseDown: (e) => {},
@@ -21,13 +17,9 @@ export default class BaseBlockComponent extends PropertyListenerComponent {
   }
 
   componentWillMount() {
-    super.componentWillMount();
-    this.blockSelectedListener = AppState.addListener('blockSelected', this.onBlockSelected.bind(this));
   }
 
   componentWillUnmount() {
-    super.componentWillUnmount();
-    this.blockSelectedListener.remove();
   }
 
   onBlockSelected(block) {

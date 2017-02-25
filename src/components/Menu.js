@@ -2,7 +2,6 @@
 
 import React, {Component} from 'react';
 
-import InstanceListenerComponent from './InstanceListenerComponent';
 import View from './platform/web/View';
 import Text from './platform/web/Text';
 
@@ -65,9 +64,7 @@ class MenuItem extends Component {
   }
 }
 
-export default class Menu extends InstanceListenerComponent {
-  static instance = AppState.blockMenu;
-  static listen = ['top', 'left', 'isVisible'];
+export default class Menu extends Component {
 
   constructor(props) {
     super(props);

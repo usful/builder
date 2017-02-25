@@ -51,13 +51,9 @@ class BlockRow extends Component {
   }
 
   componentWillMount() {
-    this.blockSelectedListener = AppState.addListener('blockSelected', this.onBlockSelected.bind(this));
-    this.blockUnselectedListener = AppState.addListener('blockUnselected', this.onBlockUnselected.bind(this));
   }
 
   componentWillUnmount() {
-    this.blockSelectedListener.remove();
-    this.blockUnselectedListener.remove();
   }
 
   onBlockSelected(block) {

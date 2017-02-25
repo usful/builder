@@ -1,6 +1,7 @@
 import Models from 'models';
+const {Document, Structure, Validators, utils} = Models;
 
-let {Min, Max} = Models.Validation;
+let {Min, Max} = Validators;
 
 const PROPERTIES = ['marginTop', 'marginRight', 'marginBottom', 'marginLeft', 'paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft'];
 

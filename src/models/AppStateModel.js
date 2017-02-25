@@ -1,7 +1,7 @@
 "use strict";
 
 import Models from 'models';
-import config from '../config';
+const {Document, Structure, Validators, utils} = Models;
 
 import GridStateModel from './state/GridStateModel';
 import ToolbarStateModel from './state/ToolbarStateModel';
@@ -9,14 +9,16 @@ import BlockMenuStateModel from './state/BlockMenuStateModel';
 
 import ProjectModel from './project/ProjectModel';
 
-const AppStateModel = new Models('AppState', {
+const AppStateModel = new Document('AppState', {
   selectedBlock: Object,
   selectedContainer: Object,
   toolbar: ToolbarStateModel,
   grid: GridStateModel,
   blockMenu: BlockMenuStateModel,
   project: ProjectModel
-}, {
+});
+
+utils.compose(AppStateModel.prototype, {
   setSelectedBlockContainer(container) {
     this.selectedContainer = container;
     this.emit('selectedBlockContainerSet', this.selectedContainer);
@@ -25,7 +27,7 @@ const AppStateModel = new Models('AppState', {
     if (this.selectedBlock && this.selectedBlock !== block) {
       this.unselectBlock();
     }
-
+    
     this.selectedBlock = block;
     this.emit('blockSelected', this.selectedBlock);
   },
@@ -33,12 +35,10 @@ const AppStateModel = new Models('AppState', {
     if (this.selectedBlock) {
       this.emit('blockUnselected', this.selectedBlock);
     }
-
+    
     this.selectedBlock = null;
     this.selectedContainer = null;
   }
 });
-
-AppStateModel.notifyInterval = config.NOTIFY_INTERVAL;
 
 export default AppStateModel;

@@ -3,7 +3,6 @@ import AppState from '../AppState';
 import Colors from '../helpers/Colors';
 
 import View from './platform/web/View';
-import InstanceListenerComponent from './InstanceListenerComponent';
 
 import PositionToolbar from './toolbars/PositionToolbar';
 import SizeToolbar from './toolbars/SizeToolbar';
@@ -23,9 +22,7 @@ const style = {
   borderRadius: 5
 };
 
-export default class StyleBar extends InstanceListenerComponent {
-  static instance = AppState.toolbar;
-  static listen = ['position', 'size'];
+export default class StyleBar extends Component {
 
   constructor(props) {
     super(props);

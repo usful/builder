@@ -6,8 +6,6 @@ import View from './platform/web/View';
 import Text from './platform/web/Text';
 import Button from './platform/web/Button';
 
-import InstanceListenerComponent from './InstanceListenerComponent';
-
 const PADDING = 10;
 
 //TODO: cross platform this.
@@ -23,9 +21,7 @@ const style = {
 
 const MODES = ['position', 'size', 'box'];
 
-export default class Toolbar extends InstanceListenerComponent {
-  static instance = AppState.toolbar;
-  static listen = MODES;
+export default class Toolbar extends Component {
 
   constructor(props) {
     super(props);
@@ -46,15 +42,9 @@ export default class Toolbar extends InstanceListenerComponent {
   }
 
   componentWillMount() {
-    super.componentWillMount();
-    this.blockSelectedListener = AppState.addListener('blockSelected', this.onBlockSelected.bind(this));
-    this.blockUnselectedListener = AppState.addListener('blockUnselected', this.onBlockUnselected.bind(this));
   }
 
   componentWillUnmount() {
-    super.componentWillUnmount();
-    this.blockSelectedListener.remove();
-    this.blockUnselectedListener.remove();
   }
 
   toggleOff(toggle) {

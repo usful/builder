@@ -1,9 +1,11 @@
 "use strict";
 
 import Models from 'models';
+const {Document, Structure, Validators, utils} = Models;
+
 import ColorModel from './ColorModel';
 
-const PaletteModel = new Models('Palette', {
+const PaletteModel = new Document('Palette', {
   _id: String,
   _created: Date,
   _updated: Date,

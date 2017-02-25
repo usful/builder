@@ -1,6 +1,7 @@
 import Models from 'models';
+const {Document, Structure, Validators, utils} = Models;
 
-let {In, Min, Max} = Models.Validation;
+let {In, Min, Max} = Validators;
 
 const HIGH_NUMBER = 9999;
 

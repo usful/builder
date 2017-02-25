@@ -1,8 +1,9 @@
 "use strict";
 
 import Models from 'models';
+const {Document, Structure, Validators, utils} = Models;
 
-const ComponentLibraryModel = new Models('ComponentLibrary', {
+const ComponentLibraryModel = new Structure('ComponentLibrary', {
   platform: String,
   components: [Object],
 }, {

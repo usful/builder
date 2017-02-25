@@ -1,8 +1,9 @@
 import Models from 'models';
+const {Document, Structure, Validators, utils} = Models;
 import BoxModel from '../models/BoxModel';
 
 import color from '../../../helpers/validators/color';
-let {integer, Min, Max, In} = Models.Validation;
+const {integer, Min, Max, In} = Validators;
 
 export default {
   color: {

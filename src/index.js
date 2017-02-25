@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import Models from 'models';
+import UUID from 'uuid-base62';
 
 import AppState from './AppState';
 import ViewModel from './Library/react-native/models/ViewBlockModel';
@@ -48,7 +48,7 @@ class App extends Component {
 
     this.state = {
       block: new ViewModel({
-        key: Models.guid(),
+        key: UUID.v4(),
         name: 'Clint',
         style: {
           padding: 10,
@@ -60,7 +60,7 @@ class App extends Component {
           width: 400
         },
         children: [new ViewModel({
-          key: Models.guid(),
+          key: UUID.v4(),
           name: 'Child 1',
           style: {
             padding: 20,

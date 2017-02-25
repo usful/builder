@@ -1,20 +1,23 @@
 "use strict";
 
 import Models from 'models';
-import config from '../../config';
 
-const BlockMenuStateModel = new Models('BlockMenuState', {
+const {Document, Structure, Validators, utils} = Models;
+
+const BlockMenuStateModel = new Document('BlockMenuState', {
   top: Number,
   left: Number,
   blockOptions: [String],
   isCloneAvailable: Boolean,
   isDeleteAvailable: Boolean,
   isVisible: Boolean
-}, {
+});
+
+utils.compose(BlockMenuStateModel.prototype, {
   hide() {
     this.isVisible = false;
   },
-  show({block, top, left}) {
+  show(block, top, left) {
     if (block.getValidChildren) {
       this.blockOptions = block.getValidChildren();
     }
@@ -27,7 +30,5 @@ const BlockMenuStateModel = new Models('BlockMenuState', {
     this.left = left;
   },
 });
-
-BlockMenuStateModel.notifyInterval = config.NOTIFY_INTERVAL;
 
 export default BlockMenuStateModel;

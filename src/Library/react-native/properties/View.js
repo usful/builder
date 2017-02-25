@@ -1,5 +1,6 @@
 import Models from 'models';
-let {In} = Models.Validation;
+const {Document, Structure, Validators, utils} = Models;
+let {In} = Validators;
 
 import base from './base';
 import BoxModel from '../models/BoxModel';

@@ -2,10 +2,8 @@ import React, {Component} from 'react';
 import AppState from '../AppState';
 import position from '../helpers/position';
 
-
 import View from './platform/web/View';
 
-import InstanceListenerComponent from './InstanceListenerComponent';
 import Outline from './Outline';
 import Ruler from './Ruler';
 
@@ -43,10 +41,7 @@ const styles = {
 };
 
 
-export default class Grid extends InstanceListenerComponent {
-  static instance = AppState.grid;
-  static listen = ['top', 'left', 'isToolActive'];
-
+export default class Grid extends Component {
   constructor(props) {
     super(props);
 
@@ -132,17 +127,9 @@ export default class Grid extends InstanceListenerComponent {
   }
 
   componentWillMount() {
-    super.componentWillMount();
-    this.blockSelectedListener = AppState.addListener('blockSelected', this.onBlockSelected.bind(this));
-    this.selectedBlockContainerSetListener = AppState.addListener('selectedBlockContainerSet', this.onSelectedBlockContainerSet.bind(this));
-    this.blockUnselectedListener = AppState.addListener('blockUnselected', this.onBlockUnselected.bind(this));
   }
 
   componentWillUnmount() {
-    super.componentWillUnmount();
-    this.blockSelectedListener.remove();
-    this.blockUnselectedListener.remove();
-    this.selectedBlockContainerSetListener.remove();
   }
 
   onMouseDown(e) {

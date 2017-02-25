@@ -1,7 +1,8 @@
 import Models from 'models';
+const {Document, Structure, Validators, utils} = Models;
 
 import color from '../../../helpers/validators/color';
-let {In, Min, Max} = Models.Validation;
+const {In, Min, Max} = Validators;
 
 const HIGH_NUMBER = 512;
 

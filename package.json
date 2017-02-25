@@ -19,27 +19,26 @@
   },
   "homepage": "https://github.com/usful/builder#readme",
   "devDependencies": {
-    "babel-core": "^6.13.2",
-    "babel-loader": "^6.2.4",
-    "babel-plugin-transform-runtime": "^6.12.0",
-    "babel-preset-es2015": "^6.13.2",
-    "babel-preset-react": "^6.11.1",
-    "babel-preset-stage-0": "^6.5.0"
+    "babel-core": "^6.23.1",
+    "babel-loader": "^6.3.2",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-react": "^6.23.0",
+    "babel-preset-react-native": "^1.9.1",
+    "babel-preset-stage-0": "^6.22.0"
   },
   "dependencies": {
-    "autoprefixer": "^6.4.0",
-    "babel-polyfill": "^6.13.0",
-    "babel-runtime": "^6.9.2",
-    "chroma-js": "^1.2.1",
-    "cssnano": "^3.7.3",
-    "fbemitter": "^2.0.2",
-    "models": "https://github.com/usful/models.git",
-    "postcss": "^5.1.2",
-    "precss": "^1.4.0",
-    "react": "^15.3.0",
-    "react-dom": "^15.3.0",
-    "react-icons": "^2.2.1",
-    "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.14.1"
+    "babel-plugin-transform-es2015-function-name": "^6.22.0",
+    "babel-polyfill": "^6.23.0",
+    "babel-runtime": "^6.23.0",
+    "chroma-js": "^1.2.2",
+    "models": "https://github.com/usful/models.git#v2",
+    "node-uuid": "^1.4.7",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-icons": "^2.2.3",
+    "uuid-base62": "^0.1.0",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.4.1"
   }
 }

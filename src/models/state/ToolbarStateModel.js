@@ -1,19 +1,19 @@
 "use strict";
 
 import Models from 'models';
-import config from '../../config';
+const {Document, Structure, Validators, utils} = Models;
 
-const ToolbarStateModel = new Models('ToolbarState', {
+const ToolbarStateModel = new Document('ToolbarState', {
   position: Boolean,
   size: Boolean,
   box: Boolean,
   isDragging: Boolean
-}, {
+});
+
+utils.compose(ToolbarStateModel.prototype, {
   get isActive() {
     return this.position || this.size || this.box;
   }
 });
-
-ToolbarStateModel.notifyInterval = config.NOTIFY_INTERVAL;
 
 export default ToolbarStateModel;
