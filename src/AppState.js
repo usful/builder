@@ -3,6 +3,7 @@
 import AppStateModel from './models/AppStateModel';
 
 const AppState = new AppStateModel({
+  block: null,
   selectedBlock: null,
   selectedContainer: null,
   toolbar: {

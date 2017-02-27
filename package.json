@@ -32,6 +32,7 @@
     "babel-polyfill": "^6.23.0",
     "babel-runtime": "^6.23.0",
     "chroma-js": "^1.2.2",
+    "fbemitter": "^2.1.1",
     "models": "https://github.com/usful/models.git#v2",
     "node-uuid": "^1.4.7",
     "react": "^15.4.2",

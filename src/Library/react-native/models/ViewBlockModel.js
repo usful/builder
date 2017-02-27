@@ -7,7 +7,7 @@ import viewProperties from '../properties/View';
 const ViewBlockModel = new Structure('ViewBlock', {
   ... viewProperties,
   style: ViewStyleModel,
-  children: ['View']
+  children: ['ViewBlock']
 });
 
 utils.compose(ViewBlockModel.prototype, {

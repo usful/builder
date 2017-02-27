@@ -7,7 +7,8 @@ const ToolbarStateModel = new Document('ToolbarState', {
   position: Boolean,
   size: Boolean,
   box: Boolean,
-  isDragging: Boolean
+  isDragging: Boolean,
+  visible: Boolean
 });
 
 utils.compose(ToolbarStateModel.prototype, {

@@ -4,7 +4,7 @@ const {Document, Structure, Validators, utils} = Models;
 import box from '../style/size';
 
 const BoxModel = new Structure('Box', {
-  ... box
+  ... box.properties
 });
 
 export default BoxModel;

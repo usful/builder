@@ -15,7 +15,7 @@ const OUTLINE_DEFAULT = {
   visible: false
 };
 
-const OUTLINE_SIZE = 10;
+const OUTLINE_SIZE = 4;
 const GRID_PADDING = 20;
 
 //TODO: cross platform this.
@@ -29,7 +29,6 @@ const styles = {
     zIndex: 0,
     outline: `${GRID_PADDING}px solid rgba(0,0,0,0.25)`,
     cursor: 'all-scroll',
-    transition: `top ${AppState.constructor.notifyInterval}ms linear, left ${AppState.constructor.notifyInterval}ms linear`
   },
   wrapper: {
     position: 'relative',
@@ -42,6 +41,10 @@ const styles = {
 
 
 export default class Grid extends Component {
+  static defaultProps = {
+    grid: {}
+  };
+  
   constructor(props) {
     super(props);
 
@@ -53,7 +56,6 @@ export default class Grid extends Component {
     };
 
     this.state = {
-      ... this.state,
       outlineTop: { ... OUTLINE_DEFAULT },
       outlineRight: { ... OUTLINE_DEFAULT },
       outlineBottom: { ... OUTLINE_DEFAULT },
@@ -61,77 +63,81 @@ export default class Grid extends Component {
     };
   }
 
-  modelChanged(prop, newModel, oldModel) {
-    super.modelChanged(prop, newModel, oldModel);
-    this.updateOutlines();
-  }
+  updateOutlines(container) {
+    const grid = this.props.grid;
+    
+    if (!container || grid.isDragging) return;
 
-  updateOutlines() {
-    if (!AppState.selectedContainer || AppState.grid.isDragging) return;
-
-    let {top, left, width, height} = position(AppState.selectedContainer);
+    let {top, left, width, height} = position(container);
 
     this.setState({
-      __ts: Date.now(),
       outlineTop: {
         visible: true,
-        top: top - OUTLINE_SIZE - AppState.grid.top,
-        left: left - OUTLINE_SIZE - AppState.grid.left,
+        top: top - OUTLINE_SIZE - grid.top,
+        left: left - OUTLINE_SIZE - grid.left,
         width: width + OUTLINE_SIZE * 2,
         height: OUTLINE_SIZE,
       },
       outlineRight: {
         visible: true,
-        top: top - AppState.grid.top,
-        left: left + width - AppState.grid.left,
+        top: top - grid.top,
+        left: left + width - grid.left,
         width: OUTLINE_SIZE,
         height: height
       },
       outlineBottom: {
         visible: true,
-        top: top + height - AppState.grid.top,
-        left: left - OUTLINE_SIZE - AppState.grid.left,
+        top: top + height - grid.top,
+        left: left - OUTLINE_SIZE - grid.left,
         width: width + OUTLINE_SIZE * 2,
         height: OUTLINE_SIZE
       },
       outlineLeft: {
         visible: true,
         top: top - AppState.grid.top,
-        left: left - OUTLINE_SIZE - AppState.grid.left,
+        left: left - OUTLINE_SIZE - grid.left,
         width: OUTLINE_SIZE,
         height: height
       }
     });
   }
-
+  
+  componentWillMount() {
+    this.blockSelectedListener = AppState.addListener('blockSelected', (block) => this.onBlockSelected(block));
+    this.blockUnselectedListener = AppState.addListener('blockUnselected', (block) => this.onBlockUnselected(block));
+    this.selectedBlockContainerSetListener = AppState.addListener('selectedBlockContainerSet', (container) => this.onSelectedBlockContainerSet(container));
+  }
+  
+  componentWillUnmount() {
+    this.blockSelectedListener.remove();
+    this.blockUnselectedListener.remove();
+    this.selectedBlockContainerSetListener.remove();
+  }
 
   onBlockSelected() {
   }
 
-  onSelectedBlockContainerSet() {
-    this.updateOutlines();
+  onSelectedBlockContainerSet(container) {
+    this.updateOutlines(container);
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextState.outlineTop !== this.state.outlineTop) return true;
+    if (nextState.outlineRight !== this.state.outlineRight) return true;
+    if (nextState.outlineBottom !== this.state.outlineBottom) return true;
+    if (nextState.outlineLeft !== this.state.outlineLeft) return true;
+    return (nextProps.grid !== this.props.grid);
+  }
+  
   onBlockUnselected() {
-    setTimeout(() => {
-      if (!AppState.selectedBlock) {
-        this.setState({
-          __ts: Date.now(),
-          outlineTop: {... OUTLINE_DEFAULT},
-          outlineRight: {... OUTLINE_DEFAULT},
-          outlineBottom: {... OUTLINE_DEFAULT},
-          outlineLeft: {... OUTLINE_DEFAULT}
-        });
-      }
-    }, AppState.constructor.NOTIFY_INTERVAL*2);
+    this.setState({
+      outlineTop: {... OUTLINE_DEFAULT},
+      outlineRight: {... OUTLINE_DEFAULT},
+      outlineBottom: {... OUTLINE_DEFAULT},
+      outlineLeft: {... OUTLINE_DEFAULT}
+    });
   }
-
-  componentWillMount() {
-  }
-
-  componentWillUnmount() {
-  }
-
+  
   onMouseDown(e) {
     if (e.button === 0) {
       this.drag = {
@@ -169,22 +175,20 @@ export default class Grid extends Component {
   }
 
   get gridStyle() {
+    const grid = this.props.grid;
+    
     return {
       ... styles.container,
-      top: AppState.grid.top,
-      left: AppState.grid.left,
-      width: AppState.grid.dimensions,
-      height: AppState.grid.dimensions
+      top: grid.top,
+      left: grid.left,
+      width: grid.dimensions,
+      height: grid.dimensions
     }
   }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (nextState.__ts !== this.state.__ts) return true;
-
-    return false;
-  }
-
+  
   render() {
+    const active = this.props.grid.isToolActive;
+    
     return (
       <View style={this.gridStyle}
             onMouseDown={(e) => this.onMouseDown(e)}
@@ -195,10 +199,10 @@ export default class Grid extends Component {
           <Ruler horizontal={true}/>
           <Ruler vertical={true}/>
           {this.props.children}
-          <Outline {... this.state.outlineTop} active={AppState.grid.isToolActive} />
-          <Outline {... this.state.outlineRight} active={AppState.grid.isToolActive} />
-          <Outline {... this.state.outlineBottom} active={AppState.grid.isToolActive} />
-          <Outline {... this.state.outlineLeft} active={AppState.grid.isToolActive} />
+          <Outline {... this.state.outlineTop} active={active} />
+          <Outline {... this.state.outlineRight} active={active} />
+          <Outline {... this.state.outlineBottom} active={active} />
+          <Outline {... this.state.outlineLeft} active={active} />
         </View>
       </View>
     );

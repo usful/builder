@@ -22,40 +22,41 @@ const style = {
 const MODES = ['position', 'size', 'box'];
 
 export default class Toolbar extends Component {
-
+  static defaultProps = {
+    toolbar: {
+      ... AppState.toolbar.toJSON()
+    }
+  };
+  
   constructor(props) {
     super(props);
-
-    this.state = {
-      ... this.state,
-      visible: false
-    }
   }
 
   onBlockSelected() {
-    this.setState({visible: true});
+    AppState.toolbar.visible = true;
   }
 
   onBlockUnselected() {
     this.toggleOff();
-    this.setState({visible: false});
+    AppState.toolbar.visible = false;
   }
-
+  
   componentWillMount() {
+    this.blockSelectedListener = AppState.addListener('blockSelected', (block) => this.onBlockSelected(block));
+    this.blockUnselectedListener = AppState.addListener('blockUnselected', (block) => this.onBlockUnselected(block));
   }
-
+  
   componentWillUnmount() {
+    this.blockSelectedListener.remove();
+    this.blockUnselectedListener.remove();
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return (nextProps.toolbar !== this.props.toolbar);
+  }
+  
   toggleOff(toggle) {
-    MODES.forEach(mode => {
-      if (mode === toggle) {
-        AppState.toolbar[mode] = !AppState.toolbar[mode];
-      } else {
-        AppState.toolbar[mode] = false;
-      }
-    });
-
+    MODES.forEach(mode => AppState.toolbar[mode] = (mode === toggle) ? !AppState.toolbar[mode] : false);
     AppState.grid.isToolActive = AppState.toolbar.isActive;
   }
 
@@ -74,8 +75,8 @@ export default class Toolbar extends Component {
 
     return (
       <Button title="Position"
-              selected={AppState.toolbar.position}
-              disabled={!this.state.visible}
+              selected={this.props.toolbar.position}
+              disabled={!this.props.toolbar.visible}
               onPress={(e) => this.toggleOff('position')}>
         <Text>Move</Text>
       </Button>
@@ -89,8 +90,8 @@ export default class Toolbar extends Component {
 
     return (
       <Button title="Size"
-              selected={AppState.toolbar.size}
-              disabled={!this.state.visible}
+              selected={this.props.toolbar.size}
+              disabled={!this.props.toolbar.visible}
               onPress={(e) => this.toggleOff('size')}>
         <Text>Resize</Text>
       </Button>
@@ -104,8 +105,8 @@ export default class Toolbar extends Component {
 
     return (
       <Button title="Box"
-              selected={AppState.toolbar.box}
-              disabled={!this.state.visible}
+              selected={this.props.toolbar.box}
+              disabled={!this.props.toolbar.visible}
               onPress={(e) => this.toggleOff('box')}>
         <Text>Margin / Padding</Text>
       </Button>

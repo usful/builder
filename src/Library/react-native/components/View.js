@@ -11,7 +11,7 @@ export default class View extends BaseBlockComponent {
   }
 
   showMenu(e) {
-    if (AppState.selectedBlock !== this.props.block) {
+    if (!AppState.isSelected(this.props.block)) {
       AppState.selectBlock(this.props.block);
     }
 
@@ -26,13 +26,9 @@ export default class View extends BaseBlockComponent {
   }
 
   get style() {
-    if (this.props.block && this.props.block.style) {
-      console.log(this.props.block.style);
-      
-      return this.props.block.style.toGridStyle(AppState);
-    }
+    const block = AppState.getBlock(this.props.block.key);
 
-    return {};
+    return block ? block.style.toGridStyle(AppState) : {};
   }
 
   renderChildren() {
@@ -55,14 +51,22 @@ export default class View extends BaseBlockComponent {
       return;
     }
 
-    if (AppState.selectedBlock === this.props.block) {
+    if (AppState.isSelected(this.props.block)) {
       AppState.unselectBlock();
     } else {
       AppState.selectBlock(this.props.block);
     }
   }
-
+  
+  onSelected() {
+  }
+  
+  onUnselected(block) {
+  }
+  
   render() {
+    console.log(this.props.block.key, 'updating');
+
     return (
       <div ref="container"
            style={this.style}

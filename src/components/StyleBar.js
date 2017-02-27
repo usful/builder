@@ -23,13 +23,13 @@ const style = {
 };
 
 export default class StyleBar extends Component {
-
+  static defaultProps = {
+    toolbar: {... AppState.toolbar.toJSON()},
+    selectedBlock: {}
+  };
+  
   constructor(props) {
     super(props);
-
-    this.state = {
-      ... this.state
-    }
   }
 
   get style() {
@@ -37,14 +37,22 @@ export default class StyleBar extends Component {
       ... style
     }
   }
-
+  
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.toolbar === this.props.toolbar && nextProps.selectedBlock === this.props.selectedBlock) return false;
+    return true;
+  }
+  
   render() {
+    const toolbar = this.props.toolbar;
+    const selectedBlock = this.props.selectedBlock;
+    
     return (
       <View style={this.style}>
         <h1>Styles</h1>
-        {AppState.toolbar.position ? <PositionToolbar style={AppState.selectedBlock.style} /> : null}
-        {AppState.toolbar.size ? <SizeToolbar style={AppState.selectedBlock.style} />: null}
-        {AppState.toolbar.box ? <BoxToolbar style={AppState.selectedBlock.style} />  : null}
+        {toolbar.position ? <PositionToolbar selectedBlock={selectedBlock} /> : null}
+        {toolbar.size ? <SizeToolbar selectedBlock={selectedBlock} />: null}
+        {toolbar.box ? <BoxToolbar selectedBlock={selectedBlock} />  : null}
       </View>
     );
   }

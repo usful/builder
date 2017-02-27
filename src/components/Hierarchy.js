@@ -51,21 +51,21 @@ class BlockRow extends Component {
   }
 
   componentWillMount() {
+    this.blockSelectedListener = AppState.addListener('blockSelected', (block) => this.onBlockSelected(block));
+    this.blockUnselectedListener = AppState.addListener('blockUnselected', (block) => this.onBlockUnselected(block));
   }
 
   componentWillUnmount() {
+    this.blockSelectedListener.remove();
+    this.blockUnselectedListener.remove();
   }
 
   onBlockSelected(block) {
-    if (block === this.props.block) {
-      this.setState({selected: true})
-    } else if (this.state.selected) {
-      this.setState({selected: false});
-    }
+    this.setState({selected: block.key === this.props.block.key})
   }
 
   onBlockUnselected(block) {
-    if (block === this.props.block) {
+    if (block.key === this.props.block.key) {
       this.setState({selected: false})
     }
   }
@@ -83,7 +83,7 @@ class BlockRow extends Component {
   }
 
   showMenu(e) {
-    if (AppState.selectedBlock !== this.props.block) {
+    if (!AppState.isSelected(this.props.block)) {
       AppState.selectBlock(this.props.block);
     }
 
@@ -100,7 +100,7 @@ class BlockRow extends Component {
 
   selectBlock(e) {
 
-    if (AppState.selectedBlock !== this.props.block) {
+    if (!AppState.isSelected(this.props.block)) {
       AppState.selectBlock(this.props.block);
     } else {
       AppState.unselectBlock();

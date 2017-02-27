@@ -5,11 +5,10 @@ import View from './platform/web/View';
 
 //TODO: cross platform this.
 const style = {
-  opacity: 0.5,
+  opacity: 0.9,
   position: 'absolute',
   zIndex: 10000,
-  transition: 'all 125ms ease',
-  mixBlendMode: 'difference'
+  transition: 'all 125ms ease-in-out',
 };
 
 export default class Outline extends Component {
