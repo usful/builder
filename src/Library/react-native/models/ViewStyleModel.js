@@ -19,6 +19,7 @@ utils.compose(ViewStyleModel.prototype, [
   {
     toGridStyle(appState) {
       return {
+        display: 'inline-block',
         cursor: 'pointer',
         ... this.toJSON(),
         ... Style.helpers.offsetAndScaleToGrid.call(this, appState),

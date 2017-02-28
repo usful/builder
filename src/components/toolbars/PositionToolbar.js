@@ -24,6 +24,7 @@ export default class PositionToolbar extends Component {
   shouldComponentUpdate(nextProps) {
     return (nextProps.selectedBlock !== this.props.selectedBlock);
   }
+  
   render() {
     const block = this.props.selectedBlock;
     

@@ -17,7 +17,7 @@ const style = {
   zIndex: 1000,
   top: 20,
   right: 20,
-  width: 100,
+  width: 200,
   padding: 10,
   borderRadius: 5
 };

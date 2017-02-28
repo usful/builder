@@ -65,8 +65,6 @@ export default class View extends BaseBlockComponent {
   }
   
   render() {
-    console.log(this.props.block.key, 'updating');
-
     return (
       <div ref="container"
            style={this.style}

@@ -122,6 +122,8 @@ export default class Grid extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
+    //TODO: this is stopping the children from updating.
+    return true;
     if (nextState.outlineTop !== this.state.outlineTop) return true;
     if (nextState.outlineRight !== this.state.outlineRight) return true;
     if (nextState.outlineBottom !== this.state.outlineBottom) return true;

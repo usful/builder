@@ -31,7 +31,13 @@ AppStateModel.prototype.getBlock = function(key) {
     }
     
     if (block.children) {
-      return block.children.find(findBlock);
+      for (let child of block.children) {
+        const found = findBlock(child);
+
+        if (found) {
+          return found;
+        }
+      }
     }
     
     return false;
@@ -49,7 +55,7 @@ AppStateModel.prototype.selectBlock = function(block) {
   if (this.selectedBlock && this.selectedBlock.key !== block.key) {
     this.unselectBlock();
   }
-  
+
   this.selectedBlock = this.getBlock(block.key);
   this.emit('blockSelected', this.selectedBlock);
 };

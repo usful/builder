@@ -44,7 +44,6 @@ class App extends Component {
     
     //TODO: This will eventually be loaded dynamically.
     AppState.block.addListener('change', (key) => {
-      console.log('block changed', key);
       this.setState({block: AppState.block.toJSON()})
     });
     
@@ -64,8 +63,7 @@ class App extends Component {
     AppState.addListener('blockSelected', (block) => {
       //Listener already exists.
       if (this.listeners[block.key]) {
-        console.log('!!! why does listener already exist??', block.key);
-        return;
+        throw new Error(`AppState Setting a listener that already exists. ${block.key}`);
       }
 
       this.setState({selectedBlock: {... block.toJSON()}});
@@ -168,36 +166,88 @@ class App extends Component {
 }
 
 Models.onReady(() => {
+  let children = [];
+  for (let i=0; i<2; i++) {
+    let subs = [];
+    for (let j=0; j<5; j++) {
+      let subsubs = [];
+      for (let k=0; k<3; k++) {
+        subsubs.push(new ViewModel({
+          key: UUID.v4(),
+          name: 'Child 4-' + i + j + k,
+          style: {
+            marginTop: 2,
+            marginBottom: 2,
+            marginLeft: 2,
+            marginRight: 2,
+            backgroundColor: '#444',
+            width: 20,
+            height: 20
+          }
+        }));
+      }
+      
+      subs.push(new ViewModel({
+        key: UUID.v4(),
+        name: 'Child 4-' + i + j,
+        style: {
+          marginTop: 5,
+          marginBottom: 5,
+          marginLeft: 5,
+          marginRight: 5,
+          backgroundColor: '#999',
+          width: 100,
+          height: 50
+        },
+        children: subsubs
+      }));
+    }
+    
+    children.push(new ViewModel({
+      key: UUID.v4(),
+      name: 'Child 4-' + i,
+      style: {
+        marginTop: 5,
+        marginBottom: 5,
+        marginLeft: 5,
+        marginRight: 5,
+        backgroundColor: '#ddd',
+        width: 400,
+        height: 200
+      },
+      children: subs
+    }));
+  }
   
   /** TODO this will eventually be loaded dynamically */
   AppState.block = new ViewModel({
     key: UUID.v4(),
     name: 'Clint',
     style: {
-      padding: 10,
+      paddingTop: 10,
       backgroundColor: '#900',
       position: 'absolute',
-      top: 100,
-      left: 100,
-      height: 200,
-      width: 400
+      top: 10,
+      left: 20,
+      height: 300,
+      width: 600
     },
     children: [new ViewModel({
       key: UUID.v4(),
       name: 'Child 1',
       style: {
-        padding: 20,
+        paddingLeft: 20,
         backgroundColor: '#eee',
-        width: 100,
-        height: 100
+        width: 200,
+        height: 200
       },
       children: [new ViewModel({
         key: UUID.v4(),
         name: 'Child 3',
         style: {
-          padding: 20,
+          paddingTop: 20,
           backgroundColor: '#00f',
-          width: 50,
+          width: 100,
           height: 50
         }
       })]
@@ -205,11 +255,12 @@ Models.onReady(() => {
       key: UUID.v4(),
       name: 'Child 2',
       style: {
-        padding: 20,
+        paddingTop: 20,
         backgroundColor: '#0f0',
-        width: 50,
-        height: 50
-      }
+        width: 600,
+        height: 300
+      },
+      children: children
     })]
   });
   
