@@ -1,9 +1,7 @@
-import Models from 'models';
-const {Document, Structure, Validators, utils} = Models;
-import Text from '../style/Text';
+import Models from '../../../../../models';
 
-const TextStyleModel = new Structure('TextStyle', {
-  ... Text
+import TextProperties from '../style/Text';
+
+export default Models.add('TextStyle', {
+  ...TextProperties
 });
-
-export default TextStyleModel;

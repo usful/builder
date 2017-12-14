@@ -1,7 +1,5 @@
-'use strict';
-
-import React, {Component} from 'react';
-import AppState from '../../../AppState';
+import React, { Component } from 'react';
+import AppState from '../../../../AppState';
 
 import BaseBlockComponent from '../../../components/BaseBlockComponent';
 
@@ -26,19 +24,20 @@ export default class View extends BaseBlockComponent {
   }
 
   get style() {
-    const block = AppState.getBlock(this.props.block.key);
-
-    return block ? block.style.toGridStyle(AppState) : {};
+    return this.props.block.style.toGridStyle(AppState);
   }
 
   renderChildren() {
     if (this.props.block && this.props.block.children) {
       return this.props.block.children.map(child =>
-        <View key={child.key}
-              onMouseDown={this.props.onMouseDown}
-              onMouseMove={this.props.onMouseMove}
-              onMouseUp={this.props.onMouseUp}
-              block={child}/>);
+        <View
+          key={child.key}
+          onMouseDown={this.props.onMouseDown}
+          onMouseMove={this.props.onMouseMove}
+          onMouseUp={this.props.onMouseUp}
+          block={child}
+        />
+      );
     }
 
     return null;
@@ -57,22 +56,22 @@ export default class View extends BaseBlockComponent {
       AppState.selectBlock(this.props.block);
     }
   }
-  
-  onSelected() {
-  }
-  
-  onUnselected(block) {
-  }
-  
+
+  onSelected() {}
+
+  onUnselected(block) {}
+
   render() {
     return (
-      <div ref="container"
-           style={this.style}
-           onMouseDown={this.props.onMouseDown}
-           onMouseMove={this.props.onMouseMove}
-           onMouseUp={this.props.onMouseUp}
-           onContextMenu={(e) => this.showMenu(e)}
-           onClick={(e) => this.selectBlock(e)}>
+      <div
+        ref="container"
+        style={this.style}
+        onMouseDown={this.props.onMouseDown}
+        onMouseMove={this.props.onMouseMove}
+        onMouseUp={this.props.onMouseUp}
+        onContextMenu={e => this.showMenu(e)}
+        onClick={e => this.selectBlock(e)}
+      >
         {this.renderChildren()}
       </div>
     );

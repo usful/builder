@@ -1,23 +1,17 @@
-import Models from 'models';
-const {Document, Structure, Validators, utils} = Models;
-let {In, Min, Max} = Validators;
-
+import Models from '../../../../../models';
 import base from './base';
 
+const { In, Min, Max } = Models.validation.validators;
+
 export default {
-  ... base,
+  ...base,
   ellipseMode: {
     type: String,
-    validators: [
-      In(['head', 'middle', 'tail', 'clip'])
-    ]
+    validators: [In(['head', 'middle', 'tail', 'clip'])]
   },
   numberOfLines: {
     type: String,
-    validators: [
-      Min(0),
-      Max(Number.MAX_SAFE_INTEGER)
-    ]
+    validators: [Min(0), Max(Number.MAX_SAFE_INTEGER)]
   },
   onLongPress: Function,
   onPress: Function,
@@ -28,4 +22,4 @@ export default {
   /** IOS */
   allowFontScaling: Boolean,
   suppressHighlighting: Boolean
-}
+};

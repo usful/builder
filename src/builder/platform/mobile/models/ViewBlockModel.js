@@ -1,20 +1,12 @@
-import Models from 'models';
-const {Document, Structure, Validators, utils} = Models;
+import Models from '../../../../../models';
 
 import ViewStyleModel from './ViewStyleModel';
 import viewProperties from '../properties/View';
 
-const ViewBlockModel = new Structure('ViewBlock', {
+export default Models.add('ViewBlock', {
   ... viewProperties,
   style: ViewStyleModel,
-  children: ['ViewBlock']
-});
-
-utils.compose(ViewBlockModel.prototype, {
-  /**
-   * What children can
-   * @returns {*[]}
-   */
+  children: ['ViewBlock'],
   getValidChildren() {
     return [
       'ViewBlock',
@@ -27,10 +19,4 @@ utils.compose(ViewBlockModel.prototype, {
   get canBeCloned() {
     return true;
   }
-}, {
-  get canBeTopLevel() {
-    return true;
-  }
 });
-
-export default ViewBlockModel;

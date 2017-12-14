@@ -7,80 +7,67 @@ const { integer, Min, Max, In } = Models.validation.validators;
 export default {
   color: {
     type: String,
-    validators: [
-      Color
-    ]
+    validators: [Color]
   },
   fontFamily: String,
   fontSize: {
     type: Number,
-    validators: [
-      Min(1),
-      Max(512)
-    ]
+    validators: [Min(1), Max(512)]
   },
   fontStyle: {
     type: String,
-    validators: [
-      In(['normal', 'italic'])
-    ]
+    validators: [In(['normal', 'italic'])]
   },
   fontWeight: {
     type: String,
     validators: [
-      In(['normal', 'bold', '100', '200', '300', '400', '500', '600', '700', '800', '900'])
+      In([
+        'normal',
+        'bold',
+        '100',
+        '200',
+        '300',
+        '400',
+        '500',
+        '600',
+        '700',
+        '800',
+        '900'
+      ])
     ]
   },
   lineHeight: {
     type: Number,
-    validators: [
-      integer,
-      Min(1),
-      Max(512)
-    ]
+    validators: [integer, Min(1), Max(512)]
   },
   textAlign: {
     type: String,
-    validators: [
-      In(['auto', 'left', 'right', 'center', 'justify'])
-    ]
+    validators: [In(['auto', 'left', 'right', 'center', 'justify'])]
   },
   textShadowColor: {
     type: String,
-    validators: [
-      Color
-    ]
+    validators: [Color]
   },
   textShadowOffset: BoxModel,
   textShadowRadius: {
     type: Number,
-    validators: [
-      Min(0),
-      Max(512)
-    ]
+    validators: [Min(0), Max(512)]
   },
 
   /** Android **/
   textAlignVertical: {
     type: String,
-    validators: [
-      In(['auto', 'top', 'bottom', 'center'])
-    ]
+    validators: [In(['auto', 'top', 'bottom', 'center'])]
   },
 
   /** IOS */
   letterSpacing: {
     type: Number,
-    validators: [
-      Min(0),
-      Max(512)
-    ]
+    validators: [Min(0), Max(512)]
   },
   textDecorationColor: {
     type: String,
-    validators: [
-      Color
-    ]
+    validators: [Color]
   },
   textDecorationLine: {
     type: String,
@@ -90,14 +77,10 @@ export default {
   },
   textDecorationStyle: {
     type: String,
-    validators: [
-      In(['solid', 'double', 'dotted', 'dashed'])
-    ]
+    validators: [In(['solid', 'double', 'dotted', 'dashed'])]
   },
   writingDirection: {
     type: String,
-    validators: [
-      In(['auto', 'ltr', 'rtl'])
-    ]
+    validators: [In(['auto', 'ltr', 'rtl'])]
   }
-}
+};

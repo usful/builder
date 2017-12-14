@@ -1,16 +1,12 @@
-import Models from 'models';
-const {Document, Structure, Validators, utils} = Models;
+import Models from '../../../../../models';
 
 import TextStyleModel from './TextStyleModel';
-import textProperties from '../properties/Text';
+import TextProperties from '../properties/Text';
 
-const TextBlockModel = new Structure('TextBlock', {
-  ... textProperties,
+const TextBlockModel = Models.add('TextBlock', {
+  ... TextProperties,
   style: TextStyleModel,
-  text: String
-});
-
-utils.compose(TextBlockModel.prototype, {
+  text: String,
   getValidChildren() {
     return [];
   },
@@ -20,10 +16,14 @@ utils.compose(TextBlockModel.prototype, {
   get canBeCloned() {
     return true;
   }
-}, {
+});
+
+//TODO: we may need a solution for statics.
+
+/**
+utils.compose(TextBlockModel.prototype, {
   get canBeTopLevel() {
     return false;
   }
-});
-
-export default TextBlockModel;
+);
+*/

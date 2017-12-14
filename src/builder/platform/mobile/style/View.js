@@ -1,150 +1,94 @@
-import Models from 'models';
-const {Document, Structure, Validators, utils} = Models;
+import Models from '../../../../../models';
+import Color from '../../../../helpers/validators/ColorValidator';
 
-import color from '../../../helpers/validators/color';
-const {In, Min, Max} = Validators;
-
+const { In, Min, Max } = Models.validation.validators;
 const HIGH_NUMBER = 512;
 
 export default {
   backfaceVisibility: {
     type: String,
-    validators: [
-      In(['visible', 'hidden'])
-    ]
+    validators: [In(['visible', 'hidden'])]
   },
   backgroundColor: {
     type: String,
-    validators: [
-      color
-    ]
+    validators: [Color]
   },
   borderBottomColor: {
     type: String,
-    validators: [
-      color
-    ]
+    validators: [Color]
   },
   borderBottomLeftRadius: {
     type: Number,
-    validators: [
-      Min(0),
-      Max(HIGH_NUMBER)
-    ]
+    validators: [Min(0), Max(HIGH_NUMBER)]
   },
   borderBottomRightRadius: {
     type: Number,
-    validators: [
-      Min(0),
-      Max(HIGH_NUMBER)
-    ]
+    validators: [Min(0), Max(HIGH_NUMBER)]
   },
   borderBottomWidth: {
     type: Number,
-    validators: [
-      Min(0),
-      Max(HIGH_NUMBER)
-    ]
+    validators: [Min(0), Max(HIGH_NUMBER)]
   },
-  borderColor:  {
+  borderColor: {
     type: String,
-    validators: [
-      color
-    ]
-  }, //color
-  borderLeftColor:  {
+    validators: [Color]
+  }, //Color
+  borderLeftColor: {
     type: String,
-    validators: [
-      color
-    ]
-  }, //color
+    validators: [Color]
+  }, //Color
   borderLeftWidth: {
     type: Number,
-    validators: [
-      Min(0),
-      Max(HIGH_NUMBER)
-    ]
+    validators: [Min(0), Max(HIGH_NUMBER)]
   },
   borderRadius: {
     type: Number,
-    validators: [
-      Min(0),
-      Max(HIGH_NUMBER)
-    ]
+    validators: [Min(0), Max(HIGH_NUMBER)]
   },
-  borderRightColor:  {
+  borderRightColor: {
     type: String,
-    validators: [
-      color
-    ]
-  }, //color
+    validators: [Color]
+  }, //Color
   borderRightWidth: {
     type: Number,
-    validators: [
-      Min(0),
-      Max(HIGH_NUMBER)
-    ]
+    validators: [Min(0), Max(HIGH_NUMBER)]
   },
   borderStyle: {
     type: String,
-    validators: [
-      In(['solid', 'dotted', 'dashed'])
-    ]
+    validators: [In(['solid', 'dotted', 'dashed'])]
   },
   borderTopColor: {
     type: String,
-    validators: [
-      color
-    ]
-  }, // color
+    validators: [Color]
+  }, // Color
   borderTopLeftRadius: {
     type: Number,
-    validators: [
-      Min(0),
-      Max(HIGH_NUMBER)
-    ]
+    validators: [Min(0), Max(HIGH_NUMBER)]
   },
   borderTopRightRadius: {
     type: Number,
-    validators: [
-      Min(0),
-      Max(HIGH_NUMBER)
-    ]
+    validators: [Min(0), Max(HIGH_NUMBER)]
   },
   borderTopWidth: {
     type: Number,
-    validators: [
-      Min(0),
-      Max(HIGH_NUMBER)
-    ]
+    validators: [Min(0), Max(HIGH_NUMBER)]
   },
   borderWidth: {
     type: Number,
-    validators: [
-      Min(0),
-      Max(HIGH_NUMBER)
-    ]
+    validators: [Min(0), Max(HIGH_NUMBER)]
   },
   opacity: {
     type: Number,
-    validators: [
-      Min(0),
-      Max(1)
-    ]
+    validators: [Min(0), Max(1)]
   },
   overflow: {
     type: String,
-    validators: [
-      In(['visible', 'hidden'])
-    ]
+    validators: [In(['visible', 'hidden'])]
   },
 
   /** ANDROID **/
   elevation: {
     type: Number,
-    validators: [
-      Min(0),
-      Max(HIGH_NUMBER)
-    ]
+    validators: [Min(0), Max(HIGH_NUMBER)]
   }
-}
+};

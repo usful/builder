@@ -1,12 +1,11 @@
-import Models from 'models';
-const {Document, Structure, Validators, utils} = Models;
-let {In} = Validators;
-
+import Models from '../../../../../models';
 import base from './base';
 import BoxModel from '../models/BoxModel';
 
+const { In } = Models.validation.validators;
+
 export default {
-  ... base,
+  ...base,
   hitSlop: BoxModel,
   onAccessibilityTap: Function,
   onMagicTap: Function,
@@ -22,9 +21,7 @@ export default {
   onStartShouldSetResponderCapture: Function,
   pointerEvents: {
     type: String,
-    validators: [
-      In(['box-none', 'none', 'box-only', 'auto'])
-    ]
+    validators: [In(['box-none', 'none', 'box-only', 'auto'])]
   },
   removeClippedSubviews: Boolean,
 
@@ -32,22 +29,18 @@ export default {
   accessibilityComponentType: {
     type: String,
     validators: [
-      In(['none','button','radiobutton_checked','radiobutton_unchecked'])
+      In(['none', 'button', 'radiobutton_checked', 'radiobutton_unchecked'])
     ]
   },
   accessibilityLiveRegion: {
     type: String,
-    validators: [
-      In(['none', 'polite', 'assertive'])
-    ]
+    validators: [In(['none', 'polite', 'assertive'])]
   },
 
   collapsable: Boolean,
   importantForAccessibility: {
     type: String,
-    validators: [
-      In(['auto', 'yes', 'no', 'no-hide-descendants'])
-    ]
+    validators: [In(['auto', 'yes', 'no', 'no-hide-descendants'])]
   },
   needsOffscreenAlphaCompositing: Boolean,
   renderToHardwareTextureAndroid: Boolean,
@@ -77,4 +70,4 @@ export default {
       ])
     ]
   }
-}
+};
