@@ -1,19 +1,12 @@
-"use strict";
+import Models from '../../../models';
 
-import Models from 'models';
-
-const {Document, Structure, Validators, utils} = Models;
-
-const BlockMenuStateModel = new Document('BlockMenuState', {
+export default Models.add('BlockMenuState', {
   top: Number,
   left: Number,
   blockOptions: [String],
   isCloneAvailable: Boolean,
   isDeleteAvailable: Boolean,
-  isVisible: Boolean
-});
-
-utils.compose(BlockMenuStateModel.prototype, {
+  isVisible: Boolean,
   hide() {
     this.isVisible = false;
   },
@@ -22,13 +15,11 @@ utils.compose(BlockMenuStateModel.prototype, {
       this.blockOptions = block.getValidChildren();
     }
 
-    this.isCloneAvailable = block.canBeCloned ? true : false;
-    this.isDeleteAvailable = block.canBeDeleted ? true : false;
+    this.isCloneAvailable = block.canBeCloned;
+    this.isDeleteAvailable = block.canBeDeleted;
 
     this.isVisible = true;
     this.top = top;
     this.left = left;
-  },
+  }
 });
-
-export default BlockMenuStateModel;

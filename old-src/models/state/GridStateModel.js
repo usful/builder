@@ -1,6 +1,9 @@
-import Models from '../../../models';
+"use strict";
 
-export default Models.add('GridState', {
+import Models from 'models';
+const {Document, Structure, Validators} = Models;
+
+const GridStateModel = new Document('GridState', {
   top: Number,
   left: Number,
   offsetX: Number,
@@ -12,3 +15,5 @@ export default Models.add('GridState', {
   dragY: Number,
   isToolActive: Boolean
 });
+
+export default GridStateModel;

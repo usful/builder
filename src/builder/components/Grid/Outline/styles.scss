@@ -1,0 +1,18 @@
+@import '../../../main.scss';
+
+.Outline {
+  opacity: 0.9;
+  position: absolute;
+  z-index: 10000;
+  transition: all 125ms ease-in-out;
+  background-color: $colorBackground;
+  display: none;
+
+  &.active {
+    background-color: $colorActive;
+  }
+
+  &.visible {
+    display: block;
+  }
+}

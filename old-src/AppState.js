@@ -1,6 +1,8 @@
-import AppStateModel from './models/state/AppStateModel';
+"use strict";
 
-const appState = new AppStateModel({
+import AppStateModel from './models/AppStateModel';
+
+const AppState = new AppStateModel({
   block: null,
   selectedBlock: null,
   selectedContainer: null,
@@ -26,4 +28,4 @@ const appState = new AppStateModel({
   }
 });
 
-export default appState;
+export default AppState;

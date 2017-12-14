@@ -1,59 +1,35 @@
-let webpack = require('webpack');
-let path = require('path');
+// webpack.config.js
+const webpack = require('webpack');
 
 module.exports = {
-  entry: [
-    // Set up an ES6-ish environment
-    'babel-polyfill',
-    
-    // Add your application's scripts below
-    './src/index.js',
-  ],
+  entry: `${__dirname}/src/index.js`,
   output: {
-    publicPath: './dist',
-    filename: './dist/main.js'
+    path: `${__dirname}/public`,
+    filename: 'index_bundle.js'
   },
   devtool: 'source-map',
+  resolve: {
+    extensions: ['.js', '.jsx', '.css', '.scss']
+  },
   module: {
     loaders: [
       {
-        loader: "babel-loader",
-        
-        // Skip any files outside of your project's `src` directory
-        include: [
-          path.resolve(__dirname, "src"),
-        ],
-        
-        // Only run `.js` and `.jsx` files through Babel
-        test: /\.jsx?$/,
-        
-        // Options to configure babel with
+        test: /(\.jsx|\.js)$/,
+        loader: 'babel-loader',
+        exclude: /(node_modules)/,
         query: {
-          plugins: [
-            'transform-runtime'
-          ],
-          presets: ['es2015', 'stage-0', 'react', 'react-native'],
+          presets: ['es2015', 'stage-0', 'react']
         }
       },
+      {
+        // scss styles are loaded with modules local scope
+        test: /\.scss$/,
+        loader:
+          'style-loader!css-loader?modules&localIdentName=' +
+          '[local]---[hash:base64:5]!sass-loader!postcss-loader'
+      }
     ]
   },
-  plugins: [
-    /**
-    new webpack.optimize.UglifyJsPlugin({
-      debug: false,
-      minimize: true,
-      sourceMap: false,
-      output: {
-        comments: false
-      },
-      compressor: {  // eslint-disable-line camelcase
-        warnings: false,
-        unused: true,
-        dead_code: true
-      },
-      mangle: false
-    })
-     */
-  ],
+  plugins: [],
   watch: true
 };
