@@ -1,17 +1,13 @@
 import Models from '../../../../../models';
-
+import compose from '../../../../helpers/compose';
 import ViewStyleModel from './ViewStyleModel';
 import viewProperties from '../properties/View';
 
-export default Models.add('ViewBlock', {
-  ... viewProperties,
+const obj = {
   style: ViewStyleModel,
   children: ['ViewBlock'],
   getValidChildren() {
-    return [
-      'ViewBlock',
-      'TextBlock'
-    ]
+    return ['ViewBlock', 'TextBlock'];
   },
   get canBeDeleted() {
     return true;
@@ -19,4 +15,8 @@ export default Models.add('ViewBlock', {
   get canBeCloned() {
     return true;
   }
-});
+};
+
+compose(obj, viewProperties);
+
+export default Models.add('ViewBlock', obj);

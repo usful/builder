@@ -1,0 +1,9 @@
+@import '../../../main.scss';
+
+.MenuItem {
+  cursor: pointer;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
+  border-bottom: 1px solid $colorBorder;
+}

@@ -1,0 +1,21 @@
+@import '../../main.scss';
+
+.Button {
+  padding: 5px;
+  background-color: $colorBackground;
+  border-radius: 5px;
+  border: 1px solid $colorBorder;
+  margin: 5px;
+  color: $colorText;
+  cursor: pointer;
+  outline: none;
+
+  &.selected {
+    color: $colorTextReverse;
+    background-color: $colorActive;
+  }
+
+  &.disabled {
+    opacity: 0.5;
+  }
+}

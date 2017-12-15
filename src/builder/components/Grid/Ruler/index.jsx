@@ -1,7 +1,7 @@
 import React from 'react';
 
 import AppState from '../../../../AppState';
-import View from '../../../platform/View';
+import View from '../../View';
 import connect from '../../../../helpers/connect';
 
 import Styles from './styles.scss';

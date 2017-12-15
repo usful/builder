@@ -5,7 +5,7 @@ import connect from '../../../helpers/connect';
 import position from '../../../helpers/getPosition';
 import { OUTLINE_SIZE, GRID_PADDING } from '../../../helpers/constants';
 
-import View from '../../platform/View';
+import View from '../View';
 import Outline from './Outline';
 import Ruler from './Ruler';
 import Styles from './styles.scss';

@@ -1,0 +1,20 @@
+@import '../../../main.scss';
+
+.BlockRow {
+  color: $colorText;
+  display: block;
+  padding: 8px;
+  margin-left: 5px;
+  margin-top: 5px;
+  border-radius: 5px;
+  background: $colorBackground;
+  border: 1px solid $colorBorder;
+  cursor: pointer;
+  user-select: none;
+
+  &.selected {
+    background: $colorBackground;
+    color: $colorTextReverse;
+    border: 1px solid $colorBorder;
+  }
+}

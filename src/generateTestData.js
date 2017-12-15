@@ -3,7 +3,6 @@ import UUID from 'uuid-base62';
 
 import AppState from './AppState';
 import ViewModel from './builder/platform/mobile/models/ViewBlockModel';
-import BlockView from './builder/platform/mobile/components/View';
 
 const children = [];
 for (let i = 0; i < 2; i++) {

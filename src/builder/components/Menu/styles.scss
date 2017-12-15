@@ -1,0 +1,32 @@
+@import '../../main.scss';
+
+.Menu {
+  position: fixed;
+  z-index: 20000;
+  top: 0;
+  left: 0;
+  background-color: opacify($colorBackground, 0.1);
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+  min-width: 100vw;
+  display: none;
+
+  &.visible {
+    display: block;
+  }
+
+  .container {
+    box-shadow: 5px 5px 20px opacify($colorText, 0.2);
+    color: $colorText;
+    position: fixed;
+    z-index: 20001;
+    background-color: $colorBackgroundSoft;
+    border-radius: 3px;
+    min-width: 100px;
+  }
+
+  .separator {
+    border-bottom: 2px solid $colorBorder;
+  }
+}

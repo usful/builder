@@ -1,0 +1,14 @@
+@import '../../main.scss';
+
+.StyleBar {
+  box-sizing: border-box;
+  background-color: $colorBackground;
+  color: $colorTextReverse;
+  position: absolute;
+  z-index: 1000;
+  top: 20px;
+  right: 20px;
+  width: 200px;
+  padding: 10px;
+  borderRadius: 5px;
+}

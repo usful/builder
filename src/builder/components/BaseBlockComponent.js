@@ -14,16 +14,12 @@ export default class BaseBlockComponent extends Component {
     super(props);
   }
 
-  shouldComponentUpdate(nextProps) {
-    return nextProps.block !== this.props.block;
-  }
-
   componentWillMount() {
-    this.blockSelectedListener = AppState.addListener('blockSelected', block =>
+    this.blockSelectedListener = AppState.emitter.addListener('blockSelected', block =>
       this.onBlockSelected(block)
     );
 
-    this.blockUnselectedListener = AppState.addListener(
+    this.blockUnselectedListener = AppState.emitter.addListener(
       'blockUnselected',
       block => this.onBlockUnselected(block)
     );

@@ -19,7 +19,7 @@ export default {
   Text: Text,
   View: View,
   helpers: {
-    offsetAndScaleToGrid: offsetAndScaleToGrid,
-    scaleToGrid: scaleToGrid
+    offsetAndScaleToGrid,
+    scaleToGrid
   }
 }

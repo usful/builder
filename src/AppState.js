@@ -1,9 +1,7 @@
 import AppStateModel from './models/state/AppStateModel';
 
-const appState = new AppStateModel({
+const AppState = new AppStateModel({
   block: null,
-  selectedBlock: null,
-  selectedContainer: null,
   toolbar: {
     position: false,
     size: false,
@@ -23,7 +21,11 @@ const appState = new AppStateModel({
     left: 0,
     isVisible: false,
     blockOptions: []
+  },
+  selection: {
+    block: null,
+    container: null
   }
 });
 
-export default appState;
+export default AppState;

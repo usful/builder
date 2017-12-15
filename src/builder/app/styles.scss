@@ -1,0 +1,20 @@
+.App {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+
+  .leftToolbar {
+    display: flex;
+    flex-direction: row;
+    z-index: 1000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+  }
+}

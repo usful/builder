@@ -2,7 +2,7 @@ import { EventEmitter } from 'fbemitter';
 import ReservedPropertyNameError from './ReservedPropertyNameError';
 import validation from './validation';
 
-const primitives = [String, Number, Boolean, Array, Date];
+const primitives = [String, Number, Boolean, Array, Date, Function, Object];
 const models = {};
 
 function fixReferences() {
@@ -124,6 +124,8 @@ function registerModel(name, newModel, opts) {
       prop.type = Function;
       prop.isAcccessor = false;
       prop.function = descriptor.value;
+    } else {
+      throw new Error('Invalid type on', name, key);
     }
 
     definition.properties[prop.key] = prop;
@@ -250,10 +252,17 @@ function registerModel(name, newModel, opts) {
             return true;
           } else if (prop === '__changed') {
             return function(prop) {
-              emit('changed', prop);
+              if (!obj.__timer) {
+                obj.__timer = setTimeout(() => {
+                  clearTimeout(obj.__timer);
+                  obj.__timer = null;
 
-              if (_parent) {
-                _parent.__changed(_parentKey);
+                  emit('changed', prop);
+                }, 1);
+
+                if (_parent) {
+                  _parent.__changed(_parentKey);
+                }
               }
             };
           } else if (prop === '__setParents') {
@@ -290,6 +299,8 @@ function registerModel(name, newModel, opts) {
 
           if (property.get) {
             value = property.get.call(proxy);
+          } else if (property.type === Function) {
+            value = property.function.bind(proxy);
           }
 
           definition.middleware.afterGet.forEach(middleware =>
@@ -303,7 +314,7 @@ function registerModel(name, newModel, opts) {
 
     const instanceProxy = close();
 
-    //Set any initial data.
+      //Set any initial data.
     definition.props.filter(def => def.type.isModel).forEach(def => {
       if (data[def.key]) {
         instanceProxy[def.key] = data[def.key];

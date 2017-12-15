@@ -3,8 +3,8 @@ import Models from '../../../../../models';
 import TextStyleModel from './TextStyleModel';
 import TextProperties from '../properties/Text';
 
-const TextBlockModel = Models.add('TextBlock', {
-  ... TextProperties,
+export default Models.add('TextBlock', {
+  ...TextProperties,
   style: TextStyleModel,
   text: String,
   getValidChildren() {

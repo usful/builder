@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import cx from 'classnames';
 
 import Styles from '../styles.scss';
-import View from '../../../platform/View';
+import View from '../../View';
 
 export default function Outline({
   width = 0,
