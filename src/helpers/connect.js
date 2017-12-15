@@ -7,9 +7,13 @@ export default function connect(models, Child) {
 
       this.listeners = [];
 
-      this.state = {
-        ...models
-      };
+      const state = {};
+
+      this.models.forEach(obj => {
+        state[obj.key] = obj.model;
+      });
+
+      this.state = state;
     }
 
     get models() {
@@ -21,7 +25,7 @@ export default function connect(models, Child) {
     componentWillMount() {
       this.listeners = this.models.map(obj =>
         obj.model.emitter.addListener('changed', prop =>
-          this.setState({ [obj.key]: obj.model })
+            this.setState({[obj.key]: obj.model})
         )
       );
     }

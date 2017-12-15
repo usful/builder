@@ -3,6 +3,7 @@ import AppState from '../../../AppState';
 import connect from '../../../helpers/connect';
 
 import View from '../View';
+import Styles from './styles.scss';
 
 //import PositionToolbar from './toolbars/PositionToolbar';
 //import SizeToolbar from './toolbars/SizeToolbar';
@@ -24,9 +25,9 @@ export default connect(
       const { toolbar, selection } = this.props;
 
       return (
-        <View style={this.style}>
+        <View className={Styles.StyleBar}>
           <h1>Styles</h1>
-          {toolbar.box ? <BoxToolbar selectedBlock={selection.block} /> : null}
+          {toolbar.box ? <BoxToolbar block={selection.block} /> : null}
         </View>
       );
     }

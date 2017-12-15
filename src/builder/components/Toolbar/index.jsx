@@ -3,6 +3,7 @@ import connect from '../../../helpers/connect';
 import Styles from './styles.scss';
 import AppState from '../../../AppState';
 
+import SelectedBlockListenerComponent from '../SelectedBlockListenerComponent';
 import View from '../View';
 import Text from '../Text';
 import Button from '../Button';
@@ -11,7 +12,7 @@ const MODES = ['position', 'size', 'box'];
 
 export default connect(
   { toolbar: AppState.toolbar },
-  class Toolbar extends Component {
+  class Toolbar extends SelectedBlockListenerComponent {
     static defaultProps = {
       toolbar: {}
     };
@@ -27,23 +28,6 @@ export default connect(
     onBlockUnselected() {
       this.toggleOff();
       AppState.toolbar.visible = false;
-    }
-
-    componentWillMount() {
-      this.blockSelectedListener = AppState.emitter.addListener(
-        'blockSelected',
-        block => this.onBlockSelected(block)
-      );
-
-      this.blockUnselectedListener = AppState.emitter.addListener(
-        'blockUnselected',
-        block => this.onBlockUnselected(block)
-      );
-    }
-
-    componentWillUnmount() {
-      this.blockSelectedListener.remove();
-      this.blockUnselectedListener.remove();
     }
 
     toggleOff(toggle) {

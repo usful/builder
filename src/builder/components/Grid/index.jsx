@@ -5,6 +5,7 @@ import connect from '../../../helpers/connect';
 import position from '../../../helpers/getPosition';
 import { OUTLINE_SIZE, GRID_PADDING } from '../../../helpers/constants';
 
+import SelectedBlockListenerComponent from '../SelectedBlockListenerComponent';
 import View from '../View';
 import Outline from './Outline';
 import Ruler from './Ruler';
@@ -20,7 +21,7 @@ const OUTLINE_DEFAULT = {
 
 export default connect(
   { grid: AppState.grid },
-  class Grid extends Component {
+  class Grid extends SelectedBlockListenerComponent {
     static defaultProps = {
       grid: {}
     };
@@ -46,7 +47,9 @@ export default connect(
     updateOutlines(container) {
       const grid = this.props.grid;
 
-      if (!container || grid.isDragging) return;
+      if (!container || grid.isDragging) {
+        return;
+      }
 
       const { top, left, width, height } = position(container);
 
@@ -79,6 +82,23 @@ export default connect(
           width: OUTLINE_SIZE,
           height: height
         }
+      });
+    }
+
+    onBlockSelected(block) {
+      console.log(Date.now(), 'Grid', 'onBlockSelected', block.name || block.key);
+    }
+
+    onSelectedBlockContainerSet(container) {
+      this.updateOutlines(container);
+    }
+
+    onBlockUnselected() {
+      this.setState({
+        outlineTop: { ...OUTLINE_DEFAULT },
+        outlineRight: { ...OUTLINE_DEFAULT },
+        outlineBottom: { ...OUTLINE_DEFAULT },
+        outlineLeft: { ...OUTLINE_DEFAULT }
       });
     }
 

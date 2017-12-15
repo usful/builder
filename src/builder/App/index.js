@@ -50,8 +50,8 @@ export default class App extends Component {
     this.drag.y = e.clientY;
 
     if (AppState.toolbar.isDragging) {
-      AppState.selectedBlock.style.left -= this.drag.dx;
-      AppState.selectedBlock.style.top -= this.drag.dy;
+      AppState.selection.block.style.left -= this.drag.dx;
+      AppState.selection.block.style.top -= this.drag.dy;
       e.stopPropagation();
     }
 
@@ -77,7 +77,7 @@ export default class App extends Component {
         <Grid ref="grid">
           <BlockView
             ref="block"
-            block={AppState.block}
+            blockKey={AppState.block.key}
             onMouseDown={e => this.onMouseDown(e)}
             onMouseMove={e => this.onMouseMove(e)}
             onMouseUp={e => this.onMouseUp(e)}

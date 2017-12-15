@@ -7,13 +7,13 @@ const models = {};
 
 function fixReferences() {
   for (let name in models) {
-    const definition = models[name];
+    const model = models[name];
 
-    definition.props
+    model.definition.props
       .filter(prop => typeof prop.type === 'string')
       .forEach(prop => {
-        if (definition[prop.type]) {
-          prop.type = definition[prop.type];
+        if (models[prop.type]) {
+          prop.type = models[prop.type];
         }
       });
   }
@@ -64,6 +64,7 @@ function addMiddleware({ middleware, definition, opts, name }) {
 function registerModel(name, newModel, opts) {
   const definition = {
     name: name,
+    isModel: true,
     properties: {},
     props: [],
     opts: { ...globalOpts, ...opts },
@@ -71,8 +72,6 @@ function registerModel(name, newModel, opts) {
   };
 
   EVENTS.forEach(event => (definition.middleware[event] = []));
-
-  models[name] = definition;
 
   //Process all the properties sent in.
   for (let key of Object.keys(newModel)) {
@@ -132,12 +131,12 @@ function registerModel(name, newModel, opts) {
     definition.props.push(prop);
   }
 
-  fixReferences();
-
   const ret = function model(data) {
     if (!new.target) {
       throw Error(`You must invoke ${name} with new.`);
     }
+
+    const construct = this.constructor;
 
     data = data || {};
 
@@ -183,6 +182,28 @@ function registerModel(name, newModel, opts) {
           }
 
           const property = definition.properties[prop];
+          const cast = value => {
+            let ret;
+            //Models must be proxied.
+            if (value && !value.isProxied) {
+              ret = new property.type(value);
+              ret.__setParents(proxy, prop);
+            } else if (value) {
+              clearParents(value);
+              ret = value;
+              ret.__setParents(proxy, prop);
+            } else {
+              ret = value;
+            }
+
+            return ret;
+          };
+
+          const clearParents = value => {
+            if (value && value.__setParents) {
+              value.__setParents(null, null);
+            }
+          };
 
           if (!property) {
             //fall thru?
@@ -206,27 +227,41 @@ function registerModel(name, newModel, opts) {
           } else if (property.isArray) {
             if (value && !value.isProxied) {
               //Set as an array proxy.
-              //TODO: how would this work? Finish the array proxy bruh.
-              obj[prop] = new Proxy(value, {});
+              //TODO: perhaps the objects in an array should have the
+              //parent set to the array proxy itself. Because if an obj
+              //is removed from an array, its parents may still point
+              //back to an object proxy it is no longer a child of,
+              //this would cause strange change propagations, and also
+              //could cause memory leaks from hanging references?
+
+              const arr = property.type.isModel
+                ? value.map(v => cast(v))
+                : value;
+
+              obj[prop] = new Proxy(arr, {
+                get: function(arrObj, arrProp) {
+                  if (arrProp === 'isProxied') {
+                    return true;
+                  }
+
+                  return arrObj[arrProp];
+                },
+                set: function(arrObj, arrProp, arrValue) {
+                  arrObj[arrProp] = property.type.isModel
+                    ? cast(arrValue)
+                    : arrValue;
+                  return true;
+                }
+              });
+            } else if (value) {
+              obj[prop] = property.type.isModel
+                ? value.forEach(v => cast(v))
+                : value;
             } else {
               obj[prop] = value;
             }
           } else if (property.type.isModel) {
-            //Clear existing references.
-            if (obj[prop] && obj[prop].__setParents) {
-              obj[prop].__setParents(null, null);
-            }
-
-            //Models must be proxied.
-            if (value && !value.isProxied) {
-              obj[prop] = new property.type(value);
-              obj[prop].__setParents(proxy, prop);
-            } else if (value) {
-              obj[prop] = value;
-              obj[prop].__setParents(proxy, prop);
-            } else {
-              obj[prop] = value;
-            }
+            obj[prop] = cast(value);
           } else {
             obj[prop] = value;
           }
@@ -242,7 +277,9 @@ function registerModel(name, newModel, opts) {
         get(obj, prop, proxy) {
           //console.log(Date.now(), definition.name, 'getting', prop);
 
-          if (prop === 'emitter') {
+          if (prop === 'constructor') {
+            return construct;
+          } else if (prop === 'emitter') {
             if (!emitter) {
               emitter = new EventEmitter();
             }
@@ -256,7 +293,6 @@ function registerModel(name, newModel, opts) {
                 obj.__timer = setTimeout(() => {
                   clearTimeout(obj.__timer);
                   obj.__timer = null;
-
                   emit('changed', prop);
                 }, 1);
 
@@ -314,12 +350,14 @@ function registerModel(name, newModel, opts) {
 
     const instanceProxy = close();
 
-      //Set any initial data.
-    definition.props.filter(def => def.type.isModel).forEach(def => {
-      if (data[def.key]) {
-        instanceProxy[def.key] = data[def.key];
-      }
-    });
+    //Set any initial data.
+    definition.props
+      .filter(def => def.type.isModel || def.isArray)
+      .forEach(def => {
+        if (data[def.key]) {
+          instanceProxy[def.key] = data[def.key];
+        }
+      });
 
     definition.middleware.afterConstruction.forEach(middleware =>
       middleware({ obj: data, definition, proxy: instanceProxy })
@@ -329,6 +367,11 @@ function registerModel(name, newModel, opts) {
   };
 
   ret.isModel = true;
+  ret.definition = definition;
+
+  models[name] = ret;
+
+  fixReferences();
 
   return ret;
 }

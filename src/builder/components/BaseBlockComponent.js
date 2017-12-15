@@ -1,9 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import AppState from '../../AppState';
+import getBlock from '../../helpers/getBlock';
 
-export default class BaseBlockComponent extends Component {
+import SelectedBlockListenerComponent from './SelectedBlockListenerComponent';
+
+export default class BaseBlockComponent extends SelectedBlockListenerComponent {
   static defaultProps = {
-    block: {},
+    blockKey: {},
     onMouseDown: e => {},
     onMouseMove: e => {},
     onMouseUp: e => {},
@@ -12,33 +15,43 @@ export default class BaseBlockComponent extends Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      block: props.blockKey ? this.__setupBlock(props.blockKey)  : null
+    };
   }
 
-  componentWillMount() {
-    this.blockSelectedListener = AppState.emitter.addListener('blockSelected', block =>
-      this.onBlockSelected(block)
-    );
-
-    this.blockUnselectedListener = AppState.emitter.addListener(
-      'blockUnselected',
-      block => this.onBlockUnselected(block)
-    );
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.blockKey !== this.props.blockKey) {
+      this.setState({
+        block: this.__setupBlock(nextProps.blockKey)
+      });
+    }
   }
 
-  componentWillUnmount() {
-    this.blockSelectedListener.remove();
-    this.blockUnselectedListener.remove();
+  __setupBlock(blockKey) {
+    const block = getBlock(AppState.block, blockKey);
+
+    if (this.__blockListener) {
+      this.__blockListener.remove();
+    }
+
+    this.__blockListener = block.emitter.addListener('changed', block =>
+      this.setState({ ts: Date.now() })
+    );
+
+    return block;
   }
 
   onBlockSelected(block) {
-    if (block.key === this.props.block.key) {
-      AppState.setSelectedBlockContainer(this.refs.container);
+    if (block.key === this.props.blockKey) {
+      AppState.setSelectedBlockContainer(this.container);
       this.onSelected();
     }
   }
 
   onBlockUnselected(block) {
-    if (block.key === this.props.block.key) {
+    if (block.key === this.props.blockKey) {
       this.onUnselected();
     }
   }

@@ -4,6 +4,8 @@ import UUID from 'uuid-base62';
 import AppState from './AppState';
 import ViewModel from './builder/platform/mobile/models/ViewBlockModel';
 
+window.AppState = AppState;
+
 const children = [];
 for (let i = 0; i < 2; i++) {
   let subs = [];

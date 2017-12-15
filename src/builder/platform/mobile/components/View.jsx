@@ -9,14 +9,20 @@ export default class View extends BaseBlockComponent {
   }
 
   showMenu(e) {
-    if (!AppState.isSelected(this.props.block)) {
-      AppState.selectBlock(this.props.block);
+    const block = this.state.block;
+
+    if (!block) {
+      return;
+    }
+
+    if (!AppState.isSelected(block)) {
+      AppState.selectBlock(block);
     }
 
     AppState.blockMenu.show({
       top: e.clientY,
       left: e.clientX,
-      block: this.props.block
+      block: block
     });
 
     e.stopPropagation();
@@ -24,18 +30,22 @@ export default class View extends BaseBlockComponent {
   }
 
   get style() {
-    return this.props.block.style.toGridStyle(AppState);
+    const block = this.state.block;
+
+    return block ? block.style.toGridStyle(AppState) : {};
   }
 
   renderChildren() {
-    if (this.props.block && this.props.block.children) {
-      return this.props.block.children.map(child =>
+    const block = this.state.block;
+
+    if (block && block.children) {
+      return block.children.map(child =>
         <View
           key={child.key}
+          blockKey={child.key}
           onMouseDown={this.props.onMouseDown}
           onMouseMove={this.props.onMouseMove}
           onMouseUp={this.props.onMouseUp}
-          block={child}
         />
       );
     }
@@ -44,16 +54,22 @@ export default class View extends BaseBlockComponent {
   }
 
   selectBlock(e) {
+    const block = this.state.block;
+
+    if (!block) {
+      return;
+    }
+
     e.stopPropagation();
 
     if (AppState.toolbar.isDragging) {
       return;
     }
 
-    if (AppState.isSelected(this.props.block)) {
+    if (AppState.isSelected(block)) {
       AppState.unselectBlock();
     } else {
-      AppState.selectBlock(this.props.block);
+      AppState.selectBlock(block);
     }
   }
 
