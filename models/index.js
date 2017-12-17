@@ -359,6 +359,8 @@ function registerModel(name, newModel, opts) {
         }
       });
 
+    definition.props.filter(def => def.auto).forEach(def => {});
+
     definition.middleware.afterConstruction.forEach(middleware =>
       middleware({ obj: data, definition, proxy: instanceProxy })
     );

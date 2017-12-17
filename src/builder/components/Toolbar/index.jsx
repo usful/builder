@@ -53,11 +53,13 @@ export default connect(
         return null;
       }
 
+      const toolbar = this.props.toolbar;
+
       return (
         <Button
           title="Position"
-          selected={this.props.toolbar.position}
-          disabled={!this.props.toolbar.visible}
+          selected={toolbar.position}
+          disabled={!toolbar.visible}
           onPress={e => this.toggleOff('position')}
         >
           <Text>Move</Text>
@@ -70,11 +72,13 @@ export default connect(
         return null;
       }
 
+      const toolbar = this.props.toolbar;
+
       return (
         <Button
           title="Size"
-          selected={this.props.toolbar.size}
-          disabled={!this.props.toolbar.visible}
+          selected={toolbar.size}
+          disabled={!toolbar.visible}
           onPress={e => this.toggleOff('size')}
         >
           <Text>Resize</Text>
@@ -87,11 +91,13 @@ export default connect(
         return null;
       }
 
+      const toolbar = this.props.toolbar;
+
       return (
         <Button
           title="Box"
-          selected={this.props.toolbar.box}
-          disabled={!this.props.toolbar.visible}
+          selected={toolbar.box}
+          disabled={!toolbar.visible}
           onPress={e => this.toggleOff('box')}
         >
           <Text>Margin / Padding</Text>

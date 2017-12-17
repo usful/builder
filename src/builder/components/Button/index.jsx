@@ -31,7 +31,7 @@ export default class Button extends Component {
         className={cx(
           Styles.Button,
           {
-            [Styles.active]: selected,
+            [Styles.selected]: selected,
             [Styles.disabled]: disabled
           },
           className
