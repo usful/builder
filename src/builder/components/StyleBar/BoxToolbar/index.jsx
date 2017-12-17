@@ -12,12 +12,6 @@ const PROPS = [
   'paddingLeft'
 ];
 
-const styles = {
-  input: {
-    width: 50
-  }
-};
-
 export default class BoxToolbar extends Component {
   static defaultProps = {
     block: null
@@ -46,56 +40,18 @@ export default class BoxToolbar extends Component {
 
     return (
       <div className={Styles.Toolbar}>
-        <h1>Margin</h1>
-        <label>Top</label>
-        <input
-          type="number"
-          defaultValue={block.style.marginTop}
-          onChange={e => this.onChange(e.target.value, 'marginTop')}
-        />
-        <label>Right</label>
-        <input
-          type="number"
-          value={block.style.marginRight}
-          onChange={e => this.onChange(e.target.value, 'marginRight')}
-        />
-        <label>Bottom</label>
-        <input
-          type="number"
-          value={block.style.marginBottom}
-          onChange={e => this.onChange(e.target.value, 'marginBottom')}
-        />
-        <label>Left</label>
-        <input
-          type="number"
-          value={block.style.marginLeft}
-          onChange={e => this.onChange(e.target.value, 'marginLeft')}
-        />
-        <h1>Padding</h1>
-        <label>Top</label>
-        <input
-          type="number"
-          value={block.style.paddingTop}
-          onChange={e => this.onChange(e.target.value, 'paddingTop')}
-        />
-        <label>Right</label>
-        <input
-          type="number"
-          value={block.style.paddingRight}
-          onChange={e => this.onChange(e.target.value, 'paddingRight')}
-        />
-        <label>Bottom</label>
-        <input
-          type="number"
-          value={block.style.paddingBottom}
-          onChange={e => this.onChange(e.target.value, 'paddingBottom')}
-        />
-        <label>Left</label>
-        <input
-          type="number"
-          value={block.style.paddingLeft}
-          onChange={e => this.onChange(e.target.value, 'paddingLeft')}
-        />
+        {PROPS.map(prop =>
+          <div key={prop} className={Styles.row}>
+            <label>
+              {prop}
+            </label>
+            <input
+              type="number"
+              defaultValue={block.style[prop]}
+              onChange={e => this.onChange(e.target.value, prop)}
+            />
+          </div>
+        )}
       </div>
     );
   }

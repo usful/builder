@@ -25,7 +25,7 @@ export default function connect(models, Child) {
     componentWillMount() {
       this.listeners = this.models.map(obj =>
         obj.model.emitter.addListener('changed', prop =>
-            this.setState({[obj.key]: obj.model})
+          this.setState({ [obj.key]: obj.model })
         )
       );
     }
@@ -35,7 +35,9 @@ export default function connect(models, Child) {
     }
 
     render() {
-      return <Child {...this.state} {...this.props} />;
+      return (
+        <Child {...this.state} {...this.props} />
+      );
     }
   };
 }

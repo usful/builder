@@ -85,8 +85,32 @@ export default connect(
       });
     }
 
+    componentWillMount() {
+      super.componentWillMount();
+
+      this.updateOutlinesListener = AppState.emitter.addListener(
+        'updateOutlines',
+        container => this.updateOutlines(container)
+      );
+
+      this.selectedBlockChangedListener = AppState.emitter.addListener(
+        'selectedBlockChanged',
+        block => this.updateOutlines(AppState.selection.container)
+      );
+    }
+
+    componentWillUnmount() {
+      super.componentWillUnmount();
+
+      this.updateOutlinesListener.remove();
+    }
     onBlockSelected(block) {
-      console.log(Date.now(), 'Grid', 'onBlockSelected', block.name || block.key);
+      console.log(
+        Date.now(),
+        'Grid',
+        'onBlockSelected',
+        block.name || block.key
+      );
     }
 
     onSelectedBlockContainerSet(container) {

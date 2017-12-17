@@ -18,6 +18,10 @@
   flex-direction: column;
   width: 100%;
 
+  .row {
+    flex: 1;
+  }
+
   h1 {
   }
 

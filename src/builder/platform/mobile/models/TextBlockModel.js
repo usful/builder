@@ -1,10 +1,10 @@
 import Models from '../../../../../models';
+import compose from '../../../../helpers/compose';
 
 import TextStyleModel from './TextStyleModel';
 import TextProperties from '../properties/Text';
 
-export default Models.add('TextBlock', {
-  ...TextProperties,
+const obj = {
   style: TextStyleModel,
   text: String,
   getValidChildren() {
@@ -16,7 +16,9 @@ export default Models.add('TextBlock', {
   get canBeCloned() {
     return true;
   }
-});
+};
+
+export default Models.add('TextBlock', compose(obj, TextProperties));
 
 //TODO: we may need a solution for statics.
 

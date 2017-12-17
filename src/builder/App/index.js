@@ -40,6 +40,8 @@ export default class App extends Component {
       if (e.nativeEvent.target === this.refs.block.refs.container) {
         e.stopPropagation();
       }
+
+      console.log(e.nativeEvent.target);
     }
   }
 
@@ -62,19 +64,16 @@ export default class App extends Component {
 
   onMouseUp(e) {
     if (AppState.toolbar.isDragging) {
-      this.refs.grid.updateOutlines(AppState.selectedContainer);
+      AppState.emitter.emit('updateOutlines', AppState.selection.container);
 
-      //TODO: not sure why this done.
-      setTimeout(() => {
-        AppState.toolbar.isDragging = false;
-      }, 10);
+      AppState.toolbar.isDragging = false;
     }
   }
 
   render() {
     return (
       <View className={Styles.App}>
-        <Grid ref="grid">
+        <Grid>
           <BlockView
             ref="block"
             blockKey={AppState.block.key}
