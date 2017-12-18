@@ -2,6 +2,7 @@ import { EventEmitter } from 'fbemitter';
 import ReservedPropertyNameError from './ReservedPropertyNameError';
 import validation from './validation';
 
+const CHANGE_THROTTLE = 1;
 const primitives = [String, Number, Boolean, Array, Date, Function, Object];
 const models = {};
 
@@ -20,7 +21,6 @@ function fixReferences() {
 }
 
 const RESERVED_SET = [
-  'validate',
   'isModel',
   'isProxied',
   'emitter',
@@ -294,7 +294,7 @@ function registerModel(name, newModel, opts) {
                   clearTimeout(obj.__timer);
                   obj.__timer = null;
                   emit('changed', prop);
-                }, 1);
+                }, CHANGE_THROTTLE);
 
                 if (_parent) {
                   _parent.__changed(_parentKey);
