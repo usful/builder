@@ -370,6 +370,8 @@ function registerModel(name, newModel, opts) {
 
   ret.isModel = true;
   ret.definition = definition;
+  //TODO: allow models to refer to other models by reference, rather than PIT
+  ret.reference = `${name}::byReference`;
 
   models[name] = ret;
 
