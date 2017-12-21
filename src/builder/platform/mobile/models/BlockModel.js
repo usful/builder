@@ -1,33 +1,145 @@
 import Models from '../../../../../models';
 import compose from '../../../../helpers/compose';
+//Clean version
 
-var data = {
+const headerBlockInstance = {
+  blockId: 'HeaderBlockID',
+  blockVersion: 12,
+  blockType: 'HeaderBlock',
+  values: [
+    {
+      key: 'text',
+      value: 'This is a good block', //OR
+      link: 'parent.user.name'
+    }
+  ]
+};
+
+//Base blocks
+//-----------
+//Input
+//Text
+//View
+//Video?
+//Sound?
+//Image?
+
+//Sources of values
+//-------------
+//parent - the parent of this block.
+//state - this blocks internal state.
+//app - an application state level.
+
+//Events
+//-------------
+//onTap // onClick
+//onDoubleTap // onDoubleClick
+//onLongTap // onLongClick
+//onSwipe
+
+const headerBlock = {
+  id: 'HeaderBlockID',
+  version: 12,
+  type: 'HeaderBlock',
+  dataPatterns: [
+    {
+      id: 'NamePattern',
+      version: 2,
+      properties: []
+    }
+  ],
+  state: {
+
+  },
+  events: {
+
+  },
+  properties: [
+    {
+      key: 'text',
+      type: String,
+      default: 'This is a thing'
+    }, {
+      key: 'margin',
+      type: Number,
+      default: 10
+    }
+  ],
+  children: [
+    {
+      blockId: 'ViewBlock',
+      style: {
+        marginTop: { link: 'props.margin' },
+        marginRight: { link: 'props.margin' },
+        marginBottom: { link: 'props.margin' },
+        marginLeft: { link: 'props.margin' },
+        fontFamily: 'Arial'
+      },
+      children: [
+        {
+          blockId: 'TextBlock',
+          values: {
+            key: 'text',
+            value: { link: 'props.text' }
+          },
+          style: {
+            fontFamily: 'Arial',
+            fontSize: 13
+          }
+        },
+        {
+          blockId: 'ViewBlock',
+          style: {
+            paddingTop: 20,
+            paddingLeft: 20,
+            paddingRight: 20
+          }
+        }
+      ]
+    }
+  ]
+};
+
+const userCardInstance = {
+  blockId: 'UserCardBlockId',
+  blockVersion: 1234,
+  blockType: 'UserCard',
+  values: [
+    {
+      key: 'user',
+      link: 'state.user'
+    }
+  ],
+  blocks: [headerBlockInstance]
+};
+
+//00000
+const VersionPattern = {
+  version: Number,
+  versionDate: Date //?
+};
+
+let ref = {
+  type: Model,
+  id: String,
+  version: Number
+};
+
+let instanceBlock = {
+  id: '1234',
   blockId: '1234',
   blockVersion: 123,
   blockType: 'DinkBlock',
+  propertiesValues: [],
   properties: [
     {
       name: 'Dink Sack',
-      parentProperty: 'name',
-      value: 'Input'
+      parentProperty: 'name'
     }
   ]
 };
 
-var dinkBlock = {
-  id: '1234',
-  version: 123,
-  type: 'DinkBlock',
-  properties: [
-    {
-      name: 'Dink Sack',
-      type: String
-    }
-  ]
-};
-
-//Instance of a block  vs.  a block that we created.
-
+//Blocks vs BlockInstances
 
 const obj = {
   blockId: String,
@@ -40,29 +152,32 @@ const obj = {
 
 const Property = {
   name: String,
-  type: Model || Primitive
+  value: Object,
+  link: Property,
+  type: Model || Primitive,
+  validators: [],
+  version: Number
 };
 
 const EmailAddress = {
   type: String,
-  validators: [
-    Validator.regex(),
-    MaxLength(2048),
-  ]
+  validators: [Validator.regex(), MaxLength(2048)]
 };
 
 const VideoType = {
   platforms: {
-    server: {
-
-    },
-    client: {
-
-    }
+    server: {},
+    client: {}
   }
 };
 
-const StringTypes = ['EmailAddress', 'WebAddress', 'PhoneNumber', 'ShortText', 'LongText'];
+const StringTypes = [
+  'EmailAddress',
+  'WebAddress',
+  'PhoneNumber',
+  'ShortText',
+  'LongText'
+];
 const NumberTypes = ['CurrencyNumber', 'WholeNumber', 'TittyNumber'];
 const DateTypes = ['FutureDate', 'PastDate', 'NowDate'];
 
@@ -82,13 +197,12 @@ const DesignPattern = {
   padding: Number,
   fontFamily: Number,
   fontStyle: String,
-  fontSize: Number,
+  fontSize: Number
 };
 
 compose(obj, {});
 
 export default Models.add('ViewBlock', obj);
-
 
 const Email = {
   to: [EmailAddress],
