@@ -9,9 +9,24 @@ var data = {
     {
       name: 'Dink Sack',
       parentProperty: 'name',
+      value: 'Input'
     }
   ]
 };
+
+var dinkBlock = {
+  id: '1234',
+  version: 123,
+  type: 'DinkBlock',
+  properties: [
+    {
+      name: 'Dink Sack',
+      type: String
+    }
+  ]
+};
+
+//Instance of a block  vs.  a block that we created.
 
 
 const obj = {
