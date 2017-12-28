@@ -1,5 +1,7 @@
-import Models from '../../../../../models';
-import compose from '../../../../helpers/compose';
+import Models from '../../../models';
+import DataPattern from './DataPattern';
+import Property from './Property';
+import DesignPattern from './DesignPattern';
 
 //Base blocks
 //-----------
@@ -31,32 +33,8 @@ const Event = {
 const Type = {
   id: String,
   version: Number,
-  name: String,
+  name: String
 };
-
-const Property = {
-  id: String,
-  version: Number,
-  name: String,
-  type: Object,
-  //validators: [Validator],
-};
-
-const DataPattern = {
-  name: String,
-  tags: [String],
-  dataPatterns: [DataPattern],
-  properties: [Property]
-};
-
-const DesignPattern = {
-  margin: Number,
-  padding: Number,
-  fontFamily: Number,
-  fontStyle: String,
-  fontSize: Number
-};
-
 
 const CustomBlockModel = Models.add('CustomBlock', {
   id: String,
@@ -68,4 +46,6 @@ const CustomBlockModel = Models.add('CustomBlock', {
   props: [Property],
   events: [Event],
   children: ['Block || CustomBlock']
-};
+});
+
+export default CustomBlockModel;
