@@ -73,6 +73,17 @@ export default class App extends Component {
   render() {
     return (
       <View className={Styles.App}>
+        <Grid />
+        <View className={Styles.leftToolbar}>
+          <Toolbar />
+        </View>
+        <StyleBar />
+        <Menu />
+      </View>
+    );
+
+    return (
+      <View className={Styles.App}>
         <Grid>
           <BlockView
             ref="block"

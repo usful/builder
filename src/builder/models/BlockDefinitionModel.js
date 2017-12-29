@@ -2,6 +2,7 @@ import Models from '../../../models';
 import DataPattern from './DataPattern';
 import Property from './Property';
 import DesignPattern from './DesignPattern';
+import BlockModel from './BlockModel';
 
 //Base blocks
 //-----------
@@ -36,7 +37,7 @@ const Type = {
   name: String
 };
 
-const CustomBlockModel = Models.add('CustomBlock', {
+const BlockDefinitionModel = Models.add('BlockDefinitionModel', {
   id: String,
   version: Number,
   type: String,
@@ -45,7 +46,7 @@ const CustomBlockModel = Models.add('CustomBlock', {
   state: [Property],
   props: [Property],
   events: [Event],
-  children: ['Block || CustomBlock']
+  children: [BlockModel]
 });
 
-export default CustomBlockModel;
+export default BlockDefinitionModel;

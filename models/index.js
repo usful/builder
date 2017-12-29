@@ -234,6 +234,12 @@ function registerModel(name, newModel, opts) {
               //this would cause strange change propagations, and also
               //could cause memory leaks from hanging references?
 
+              if (!Array.isArray(value)) {
+                throw new Error(
+                  `Attempting to set a non array to an array type on ${name}.${property.key}`
+                );
+              }
+
               const arr = property.type.isModel
                 ? value.map(v => cast(v))
                 : value;

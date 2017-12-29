@@ -1,15 +1,15 @@
 .Grid {
   box-sizing: border-box;
-  background: #ccc;
+  background: #f0f0f0;
   position: absolute;
   background-size: 100px 100px, 100px 100px, 10px 10px, 10px 10px;
   background-image: linear-gradient(
-      rgba(255, 255, 255, 0.5) 2px,
+      rgba(255, 255, 255, 0.75) 2px,
       transparent 2px
     ),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.5) 2px, transparent 2px),
-    linear-gradient(rgba(255, 255, 255, 0.66) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.66) 1px, transparent 1px);
+    linear-gradient(90deg, rgba(255, 255, 255, 0.75) 2px, transparent 2px),
+    linear-gradient(rgba(255, 255, 255, 0.90) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.90) 1px, transparent 1px);
   z-index: 0;
   cursor: all-scroll;
 
