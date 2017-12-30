@@ -5,8 +5,9 @@ import Property from './Property';
 const obj = {
   blockId: String,
   blockVersion: Number,
+  blockType: String,
   type: String,
-  properties: [Property]
+  values: [Property]
 };
 
 compose(obj, {});

@@ -37,7 +37,7 @@ const Type = {
   name: String
 };
 
-const BlockDefinitionModel = Models.add('BlockDefinitionModel', {
+const BlockDefinitionModel = Models.add('BlockDefinition', {
   id: String,
   version: Number,
   type: String,

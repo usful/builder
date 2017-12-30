@@ -387,6 +387,7 @@ function registerModel(name, newModel, opts) {
 }
 
 export default {
+  definitions: models,
   add: registerModel,
   addMiddleware,
   validation

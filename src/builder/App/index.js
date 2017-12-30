@@ -10,6 +10,9 @@ import Toolbar from '../components/Toolbar';
 import Hierarchy from '../components/Hierarchy';
 import Menu from '../components/Menu';
 
+import data from './generateTestData2';
+import BlockRenderer from './BlockRenderer';
+
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -73,7 +76,7 @@ export default class App extends Component {
   render() {
     return (
       <View className={Styles.App}>
-        <Grid />
+        <BlockRenderer block={data.userCardBlockInstance}/>
         <View className={Styles.leftToolbar}>
           <Toolbar />
         </View>
@@ -85,13 +88,6 @@ export default class App extends Component {
     return (
       <View className={Styles.App}>
         <Grid>
-          <BlockView
-            ref="block"
-            blockKey={AppState.block.key}
-            onMouseDown={e => this.onMouseDown(e)}
-            onMouseMove={e => this.onMouseMove(e)}
-            onMouseUp={e => this.onMouseUp(e)}
-          />
         </Grid>
         <View className={Styles.leftToolbar}>
           <Hierarchy block={AppState.block} />
@@ -99,6 +95,13 @@ export default class App extends Component {
         </View>
         <StyleBar />
         <Menu />
+        <BlockView
+          ref="block"
+          blockKey={AppState.block.key}
+          onMouseDown={e => this.onMouseDown(e)}
+          onMouseMove={e => this.onMouseMove(e)}
+          onMouseUp={e => this.onMouseUp(e)}
+        />
       </View>
     );
   }
