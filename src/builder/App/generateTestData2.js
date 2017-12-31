@@ -136,7 +136,7 @@ const UserCardBlock = new BlockDefinitionModel({
 
 const userCardBlockInstance = new BlockModel({
   blockVersion: 12,
-  blockType: 'HeaderBlock',
+  blockType: 'UserCardBlock',
   values: [
     {
       key: 'name',
