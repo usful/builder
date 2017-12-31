@@ -13,7 +13,8 @@ export default Models.add('Property', {
     validators: [validators.required]
   },
   value: Object,
-  type: Object
+  type: Object,
+  default: Object
   //validators: [Validator],
 });
 

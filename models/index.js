@@ -235,6 +235,8 @@ function registerModel(name, newModel, opts) {
               //could cause memory leaks from hanging references?
 
               if (!Array.isArray(value)) {
+                console.log(name, prop, obj, value);
+
                 throw new Error(
                   `Attempting to set a non array to an array type on ${name}.${property.key}`
                 );
@@ -356,7 +358,7 @@ function registerModel(name, newModel, opts) {
 
     const instanceProxy = close();
 
-    //Set any initial data.
+    //Proxy any initial objects sent in with data object.
     definition.props
       .filter(def => def.type.isModel || def.isArray)
       .forEach(def => {
@@ -365,7 +367,15 @@ function registerModel(name, newModel, opts) {
         }
       });
 
-    definition.props.filter(def => def.auto).forEach(def => {});
+    //Set any auto values.
+    definition.props
+      .filter(def => data[def.key] === undefined && def.auto !== undefined)
+      .forEach(def => (instanceProxy[def.key] = def.auto));
+
+    //Set any default values.
+    definition.props
+      .filter(def => data[def.key] === undefined && def.default !== undefined)
+      .forEach(def => (instanceProxy[def.key] = def.default));
 
     definition.middleware.afterConstruction.forEach(middleware =>
       middleware({ obj: data, definition, proxy: instanceProxy })

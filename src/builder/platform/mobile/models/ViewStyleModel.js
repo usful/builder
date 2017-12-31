@@ -13,6 +13,8 @@ compose(obj, [
   Style.position.methods,
   Style.size.methods,
   Style.box.methods,
+  //TODO: Remove this? Maybe all style blocks need to hold all style?
+  Style.Text,
   {
     toGridStyle(appState) {
       return {

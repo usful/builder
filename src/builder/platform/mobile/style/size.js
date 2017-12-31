@@ -1,7 +1,7 @@
 import Models from '../../../../../models';
 
 const { Min, Max } = Models.validation.validators;
-const PROPERTIES = ['height', 'width'];
+const PROPERTIES = ['height', 'width', 'minWidth', 'minHeight'];
 const properties = {};
 
 PROPERTIES.forEach(property => {

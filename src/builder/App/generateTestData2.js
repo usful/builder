@@ -3,7 +3,6 @@ import UUID from 'uuid-base62';
 
 import AppState from '../../AppState';
 import BlockDefinitionModel from '../models/BlockDefinitionModel';
-import BlockModel from '../models/BlockModel';
 import Models from '../../../models';
 
 window.AppState = AppState;
@@ -15,13 +14,14 @@ const HeaderBlock = new BlockDefinitionModel({
   type: 'HeaderBlock',
   properties: [
     {
-      key: 'text',
+      name: 'text',
       type: String,
       default: 'Header'
     }
   ],
   children: [
     {
+      id: 'HeaderBlockId-1',
       blockType: 'ViewBlock',
       style: {
         backgroundColor: '#090',
@@ -32,11 +32,12 @@ const HeaderBlock = new BlockDefinitionModel({
       },
       children: [
         {
+          id: 'HeaderBlockId-2',
           blockType: 'TextBlock',
           values: [
             {
-              key: 'text',
-              value: 'props.text'
+              name: 'text',
+              value: {bind: 'props.text'}
             }
           ],
           style: {
@@ -59,7 +60,7 @@ const UserCardBlock = new BlockDefinitionModel({
       version: 2,
       properties: [
         {
-          key: 'name',
+          name: 'name',
           type: String,
           default: 'Name'
         }
@@ -68,7 +69,7 @@ const UserCardBlock = new BlockDefinitionModel({
   ],
   state: [
     {
-      key: 'expanded',
+      name: 'expanded',
       type: Boolean,
       default: false
     }
@@ -76,34 +77,37 @@ const UserCardBlock = new BlockDefinitionModel({
   events: [],
   properties: [
     {
-      key: 'name',
+      name: 'name',
       type: String,
       default: 'This is a Name'
     },
     {
-      key: 'margin',
+      name: 'margin',
       type: Number,
       default: 10
     }
   ],
   children: [
     {
+      id: 'UserCardBlockID-1',
       blockType: 'ViewBlock',
       style: {
         backgroundColor: '#ff0',
-        marginTop: { link: 'props.margin' },
-        marginRight: { link: 'props.margin' },
-        marginBottom: { link: 'props.margin' },
-        marginLeft: { link: 'props.margin' },
-        fontFamily: 'Arial'
+        marginTop: { bind: 'props.margin' },
+        marginRight: { bind: 'props.margin' },
+        marginBottom: { bind: 'props.margin' },
+        marginLeft: { bind: 'props.margin' },
       },
       children: [
         {
+          id: 'UserCardBlockID-2',
           blockType: 'TextBlock',
-          values: {
-            key: 'text',
-            value: { link: 'props.name' }
-          },
+          values: [
+            {
+              name: 'text',
+              value: { bind: 'props.name' }
+            }
+          ],
           style: {
             minHeight: 50,
             minWidth: 100,
@@ -114,11 +118,13 @@ const UserCardBlock = new BlockDefinitionModel({
           }
         },
         {
+          id: 'UserCardBlockID-3',
+          type: 'Instance',
           blockVersion: 13,
-          blockType: 'HeaderBlock',
-
+          blockType: 'HeaderBlock'
         },
         {
+          id: 'UserCardBlockID-4',
           blockType: 'ViewBlock',
           style: {
             backgroundColor: '#f00',
@@ -134,12 +140,14 @@ const UserCardBlock = new BlockDefinitionModel({
   ]
 });
 
-const userCardBlockInstance = new BlockModel({
+const userCardBlockInstance = new BlockDefinitionModel({
+  id: '1',
+  type: 'Instance',
   blockVersion: 12,
   blockType: 'UserCardBlock',
   values: [
     {
-      key: 'name',
+      name: 'name',
       value: 'Clinton Robinson'
     }
   ]
