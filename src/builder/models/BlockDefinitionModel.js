@@ -45,7 +45,7 @@ const BlockDefinitionModel = Models.add('BlockDefinition', {
   dataPatterns: [DataPattern],
   designPatterns: [DesignPattern],
   state: [Property],
-  props: [Property],
+  properties: [Property],
   events: [Event],
   blockId: String,
   blockVersion: Number,

@@ -1,24 +1,17 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
-import {
-  isBaseBlock,
-  isBound,
-  propertyArrayToObject
-} from '../mobile/helpers';
+import { isBound, propertyArrayToObject } from '../mobile/helpers';
 import ViewBlock from './ViewBlock';
 import TextBlock from './TextBlock';
 
 const Blocks = {
-  ViewBlock,
-  TextBlock
+  'ViewBlock:0': ViewBlock,
+  'TextBlock:0': TextBlock
 };
 
 export default function createClass(blockData) {
   const BlockClass = createReactClass({
-
     parseBinding: function(obj) {
-      console.log(Date.now(), blockData.type, 'parseBinding', obj);
-
       const binding = obj.bind.split('.');
       const source = binding.shift();
       const prop = binding.shift();
@@ -48,7 +41,7 @@ export default function createClass(blockData) {
         return null;
       }
 
-      const props = { ...this.defaultProps, key: blockData.id };
+      const props = { ...this.defaultProps, key: block.id };
 
       if (block.values) {
         block.values.forEach(
@@ -64,23 +57,19 @@ export default function createClass(blockData) {
       if (block.style) {
         Object.keys(block.style).forEach(key => {
           const style = block.style[key];
-          props.style[key] = isBound(style)
-            ? this.parseBinding(style)
-            : style;
+          props.style[key] = isBound(style) ? this.parseBinding(style) : style;
         });
       }
 
-      console.log(Date.now(), 'Rendering', blockData.type, block.blockType, props);
-
       return React.createElement(
-        Blocks[block.blockType],
+        Blocks[`${block.blockType}:${block.blockVersion || 0}`],
         props,
         (block.children || []).map(child => this.renderBlock(child))
       );
     },
 
     getDefaultProps: function() {
-      this.defaultProps = propertyArrayToObject(blockData.props);
+      this.defaultProps = propertyArrayToObject(blockData.properties);
       return this.defaultProps;
     },
 
@@ -91,13 +80,11 @@ export default function createClass(blockData) {
     },
 
     render: function() {
-      console.log(Date.now(), 'Rendering', blockData.type, this);
-
       return blockData.children.map(child => this.renderBlock(child));
     }
   });
 
-  Blocks[blockData.type] = BlockClass;
+  Blocks[`${blockData.type}:${blockData.version}`] = BlockClass;
 
   console.log(Date.now(), 'Registered', blockData.type);
 

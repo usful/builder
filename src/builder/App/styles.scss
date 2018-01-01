@@ -6,7 +6,7 @@
   min-height: 100vh;
   box-sizing: border-box;
   position: relative;
-  overflow: hidden;
+  //overflow: hidden;
 
   .leftToolbar {
     display: flex;
@@ -16,5 +16,10 @@
     top: 0;
     left: 0;
     height: 100vh;
+  }
+
+  hr {
+    display: block;
+    margin: 4em 0;
   }
 }

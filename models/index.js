@@ -255,9 +255,17 @@ function registerModel(name, newModel, opts) {
                   return arrObj[arrProp];
                 },
                 set: function(arrObj, arrProp, arrValue) {
+                  if (arrProp === 'length') {
+                    arrObj[arrProp] = arrValue;
+                    return true;
+                  }
+
                   arrObj[arrProp] = property.type.isModel
                     ? cast(arrValue)
                     : arrValue;
+
+                  proxy.__changed(prop);
+
                   return true;
                 }
               });
@@ -367,10 +375,12 @@ function registerModel(name, newModel, opts) {
         }
       });
 
+    /**
     //Set any auto values.
     definition.props
       .filter(def => data[def.key] === undefined && def.auto !== undefined)
       .forEach(def => (instanceProxy[def.key] = def.auto));
+    */
 
     //Set any default values.
     definition.props

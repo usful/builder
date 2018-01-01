@@ -1,13 +1,7 @@
 import React, { Component } from 'react';
 import UUID from 'uuid-base62';
 
-import AppState from '../../AppState';
 import BlockDefinitionModel from '../models/BlockDefinitionModel';
-import Models from '../../../models';
-
-window.AppState = AppState;
-window.Models = Models;
-
 const HeaderBlock = new BlockDefinitionModel({
   id: 'HeaderBlockId',
   version: 13,
@@ -37,7 +31,7 @@ const HeaderBlock = new BlockDefinitionModel({
           values: [
             {
               name: 'text',
-              value: {bind: 'props.text'}
+              value: { bind: 'props.text' }
             }
           ],
           style: {
@@ -93,10 +87,10 @@ const UserCardBlock = new BlockDefinitionModel({
       blockType: 'ViewBlock',
       style: {
         backgroundColor: '#ff0',
-        marginTop: { bind: 'props.margin' },
-        marginRight: { bind: 'props.margin' },
-        marginBottom: { bind: 'props.margin' },
-        marginLeft: { bind: 'props.margin' },
+        paddingTop: { bind: 'props.margin' },
+        paddingRight: { bind: 'props.margin' },
+        paddingBottom: { bind: 'props.margin' },
+        paddingLeft: { bind: 'props.margin' }
       },
       children: [
         {
@@ -121,7 +115,13 @@ const UserCardBlock = new BlockDefinitionModel({
           id: 'UserCardBlockID-3',
           type: 'Instance',
           blockVersion: 13,
-          blockType: 'HeaderBlock'
+          blockType: 'HeaderBlock',
+          values: [
+            {
+              name: 'text',
+              value: { bind: 'props.name' }
+            }
+          ]
         },
         {
           id: 'UserCardBlockID-4',
@@ -153,13 +153,7 @@ const userCardBlockInstance = new BlockDefinitionModel({
   ]
 });
 
-const Blocks = {
-  [`${HeaderBlock.type}:${HeaderBlock.version}`]: HeaderBlock,
-  [`${UserCardBlock.type}:${UserCardBlock.version}`]: UserCardBlock
-};
-
 export default {
-  Blocks,
   HeaderBlock,
   UserCardBlock,
   userCardBlockInstance
