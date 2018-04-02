@@ -1,9 +1,9 @@
 import Models from '../../../models';
 import DataPattern from './DataPattern';
 import Property from './Property';
-import DesignPattern from './DesignPattern';
+import DesignMotif from './DesignMotif';
 //TODO: this should be a generic style model?
-import ViewStyleModel from '../platform/mobile/models/ViewStyleModel';
+import Style from './StyleModel';
 
 //Base blocks
 //-----------
@@ -42,8 +42,8 @@ const BlockDefinitionModel = Models.add('BlockDefinition', {
   id: String,
   version: Number,
   type: String,
-  dataPatterns: [DataPattern],
-  designPatterns: [DesignPattern],
+  patterns: [DataPattern],
+  motifs: [DesignMotif],
   state: [Property],
   properties: [Property],
   events: [Event],
@@ -51,7 +51,7 @@ const BlockDefinitionModel = Models.add('BlockDefinition', {
   blockVersion: Number,
   blockType: String,
   values: [Property],
-  style: ViewStyleModel,
+  style: Style,
   children: ['BlockDefinition'],
 });
 

@@ -56,6 +56,7 @@ export default function createClass(blockData) {
 
       if (block.style) {
         Object.keys(block.style).forEach(key => {
+
           const style = block.style[key];
           props.style[key] = isBound(style) ? this.parseBinding(style) : style;
         });

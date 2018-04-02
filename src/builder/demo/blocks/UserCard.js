@@ -1,54 +1,8 @@
-import React, { Component } from 'react';
-import UUID from 'uuid-base62';
-
-import BlockDefinitionModel from '../models/BlockDefinitionModel';
-const HeaderBlock = new BlockDefinitionModel({
-  id: 'HeaderBlockId',
-  version: 13,
-  type: 'HeaderBlock',
-  properties: [
-    {
-      name: 'text',
-      type: String,
-      default: 'Header'
-    }
-  ],
-  children: [
-    {
-      id: 'HeaderBlockId-1',
-      blockType: 'ViewBlock',
-      style: {
-        backgroundColor: '#090',
-        paddingTop: 5,
-        paddingLeft: 10,
-        paddingBottom: 5,
-        paddingRight: 10
-      },
-      children: [
-        {
-          id: 'HeaderBlockId-2',
-          blockType: 'TextBlock',
-          values: [
-            {
-              name: 'text',
-              value: { bind: 'props.text' }
-            }
-          ],
-          style: {
-            fontSize: 26,
-            color: '#000'
-          }
-        }
-      ]
-    }
-  ]
-});
-
-const UserCardBlock = new BlockDefinitionModel({
+export default new BlockDefinitionModel({
   id: 'UserCardBlockID',
   version: 12,
   type: 'UserCardBlock',
-  dataPatterns: [
+  patterns: [
     {
       id: 'NamePattern',
       version: 2,
@@ -68,7 +22,13 @@ const UserCardBlock = new BlockDefinitionModel({
       default: false
     }
   ],
-  events: [],
+  publishes: [],
+  events: [
+    {
+      name: 'onClick',
+      func: ''
+    }
+  ],
   properties: [
     {
       name: 'name',
@@ -139,22 +99,3 @@ const UserCardBlock = new BlockDefinitionModel({
     }
   ]
 });
-
-const userCardBlockInstance = new BlockDefinitionModel({
-  id: '1',
-  type: 'Instance',
-  blockVersion: 12,
-  blockType: 'UserCardBlock',
-  values: [
-    {
-      name: 'name',
-      value: 'Clinton Robinson'
-    }
-  ]
-});
-
-export default {
-  HeaderBlock,
-  UserCardBlock,
-  userCardBlockInstance
-};

@@ -1,6 +1,6 @@
 import Models from '../../../../../models';
 import compose from '../../../../helpers/compose';
-import Style from '../style';
+import Style from '../styleOld';
 
 const obj = {};
 
@@ -8,6 +8,7 @@ compose(obj, [
   Style.position.properties,
   Style.size.properties,
   Style.box.properties,
+  Style.Text,
   Style.flexbox,
   Style.View,
   Style.position.methods,

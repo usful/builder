@@ -5,6 +5,16 @@ const { In, Min, Max } = Models.validation.validators;
 const HIGH_NUMBER = 9999;
 
 export default {
+  backgroundImage: {
+    type: String
+  },
+  backgroundSize: {
+    type: String
+  },
+  display: {
+    type: String,
+    validators: [In(['flex', 'block', 'inline-block', 'none', 'flex-inline'])]
+  },
   alignItems: {
     type: String,
     validators: [In(['flex-start', 'flex-end', 'center', 'stretch'])]
@@ -13,29 +23,12 @@ export default {
     type: String,
     validators: [In(['auto', 'flex-start', 'flex-end', 'center', 'stretch'])]
   },
-  borderBottomWidth: {
-    type: Number,
-    validators: [Min(0), Max(HIGH_NUMBER)]
-  },
-  borderLeftWidth: {
-    type: Number,
-    validators: [Min(0), Max(HIGH_NUMBER)]
-  },
-  borderRightWidth: {
-    type: Number,
-    validators: [Min(0), Max(HIGH_NUMBER)]
-  },
-  borderTopWidth: {
-    type: Number,
-    validators: [Min(0), Max(HIGH_NUMBER)]
-  },
-  borderWidth: {
-    type: Number,
-    validators: [Min(0), Max(HIGH_NUMBER)]
-  },
   flex: {
     type: Number,
     validators: [Min(0), Max(1)]
+  },
+  flexGrow: {
+    type: Number
   },
   flexDirection: {
     type: String,
@@ -53,6 +46,6 @@ export default {
   },
   position: {
     type: String,
-    validators: [In(['absolute', 'relative'])]
+    validators: [In(['absolute', 'relative', 'fixed', 'static'])]
   }
 };
