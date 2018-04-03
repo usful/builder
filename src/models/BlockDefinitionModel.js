@@ -1,4 +1,4 @@
-import Models from '../../../models';
+import Models from '../../models';
 import DataPattern from './DataPattern';
 import Property from './Property';
 import DesignMotif from './DesignMotif';

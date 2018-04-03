@@ -238,7 +238,9 @@ function registerModel(name, newModel, opts) {
                 console.log(name, prop, obj, value);
 
                 throw new Error(
-                  `Attempting to set a non array to an array type on ${name}.${property.key}`
+                  `Attempting to set a non array to an array type on ${name}.${
+                    property.key
+                  }`
                 );
               }
 
@@ -291,8 +293,6 @@ function registerModel(name, newModel, opts) {
           return true;
         },
         get(obj, prop, proxy) {
-          //console.log(Date.now(), definition.name, 'getting', prop);
-
           if (prop === 'constructor') {
             return construct;
           } else if (prop === 'emitter') {

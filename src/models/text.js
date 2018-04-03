@@ -1,5 +1,5 @@
-import Models from '../../../../../models';
-import Color from '../../../../helpers/validators/ColorValidator';
+import Models from '../../models';
+import Color from './validators/ColorValidator';
 
 const { integer, Min, Max, In } = Models.validation.validators;
 

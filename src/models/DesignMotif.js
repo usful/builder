@@ -1,4 +1,4 @@
-import Models from '../../../models';
+import Models from '../../models';
 
 //TODO : WIP
 export default Models.add('DesignMotif', {

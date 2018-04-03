@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import AppState from '../../AppState';
-import Styles from './styles.scss';
+import Styles from './App.scss';
 import BlockDefinitionModel from '../models/BlockDefinitionModel';
-import View from '../components/View';
+import { propertyArrayToObject } from '../helpers';
 
 import ProfileHeader from '../demo/blocks/ProfileHeader';
 
@@ -20,11 +19,13 @@ const profileHeader = new BlockDefinitionModel({
     },
     {
       name: 'hero',
-      value: 'url(https://mona-production.s3.amazonaws.com/56b3633ccacd591737ccbce7.image)'
+      value:
+        'url(https://mona-production.s3.amazonaws.com/56b3633ccacd591737ccbce7.image)'
     },
     {
       name: 'logo',
-      value: 'url(https://mona-production.s3.amazonaws.com/56a9248bf7c2916738e86a40.image)'
+      value:
+        'url(https://mona-production.s3.amazonaws.com/56a9248bf7c2916738e86a40.image)'
     }
   ]
 });
@@ -37,7 +38,9 @@ export default class App extends Component {
   }
 
   componentWillMount() {
-    this.listener = profileHeader.emitter.addListener('changed', () => this.setState({ts: Date.now()}));
+    this.listener = profileHeader.emitter.addListener('changed', () =>
+      this.setState({ ts: Date.now() })
+    );
   }
 
   componentWillUnmount() {
@@ -46,10 +49,10 @@ export default class App extends Component {
 
   render() {
     return (
-      <View className={Styles.App}>
-        <hr/>
-        <ProfileHeader instance={profileHeader}/>
-      </View>
+      <div className={Styles.App}>
+        <hr />
+        <ProfileHeader {...propertyArrayToObject(profileHeader.values)} />
+      </div>
     );
   }
 }

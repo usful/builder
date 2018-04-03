@@ -1,6 +1,6 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
-import { isBound, propertyArrayToObject } from '../mobile/helpers';
+import { isBound, propertyArrayToObject } from '../helpers';
 import ViewBlock from './ViewBlock';
 import TextBlock from './TextBlock';
 

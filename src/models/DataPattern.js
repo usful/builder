@@ -1,4 +1,4 @@
-import Models from '../../../models';
+import Models from '../../models';
 import Property from './Property';
 
 const { validators } = Models.validation;

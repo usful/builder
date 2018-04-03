@@ -1,13 +1,11 @@
 import React from 'react';
 
 import BlockDefinitionModel from '../../models/BlockDefinitionModel';
-import Types from '../types';
 
 import TitlePattern from '../patterns/TitlePattern';
 import HeroPattern from '../patterns/HeroPattern';
 import LaneMotif from '../motifs/LaneMotif';
-import { propertyArrayToObject } from '../../platform/mobile/helpers';
-import createClass from '../../platform/renderer/createClass';
+import createClass from '../../renderer/createClass';
 
 const example = (
   <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -25,25 +23,7 @@ const example = (
   </div>
 );
 
-const getStyleFromMotif = motif => {
-  const style = {};
-
-  const units = motif.units;
-
-  Object.keys(motif)
-    .filter(key => key !== 'units')
-    .forEach(key => {
-      if (typeof motif === 'number') {
-        style[key] = `${motif[key]}${units}`;
-      } else {
-        style[key] = motif[key];
-      }
-    });
-
-  return style;
-};
-
-const ProfileHeaderBlock = createClass(
+export default createClass(
   new BlockDefinitionModel({
     id: 'ProfileHeaderBlock',
     version: 13,
@@ -79,7 +59,7 @@ const ProfileHeaderBlock = createClass(
         blockType: 'ViewBlock',
         style: {
           //TODO: this should be generated from the Motifs
-          ...getStyleFromMotif(LaneMotif),
+          //...getStyleFromMotif(LaneMotif),
           display: 'flex',
           flexDirection: 'column'
         },
@@ -149,7 +129,3 @@ const ProfileHeaderBlock = createClass(
     ]
   })
 );
-
-export default ({ instance, children }) => {
-  return <ProfileHeaderBlock {...propertyArrayToObject(instance.values)} />;
-};

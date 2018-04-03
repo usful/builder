@@ -1,5 +1,5 @@
-import Models from '../../../../../models';
-import Color from "../../../../helpers/validators/ColorValidator";
+import Models from '../../models';
+import Color from './validators/ColorValidator';
 
 const { In, Min, Max } = Models.validation.validators;
 const cssUnit = {
@@ -10,7 +10,7 @@ const cssUnit = {
   }
 };
 
-const HIGH_NUMBER = 2**16;
+const HIGH_NUMBER = 2 ** 16;
 
 export default {
   marginTop: {
@@ -100,43 +100,43 @@ export default {
   },
   top: {
     type: Number,
-    validators: [Min(-HIGH_NUMBER), Max(HIGH_NUMBER)],
+    validators: [Min(-HIGH_NUMBER), Max(HIGH_NUMBER)]
   },
   right: {
     type: Number,
-    validators: [Min(-HIGH_NUMBER), Max(HIGH_NUMBER)],
+    validators: [Min(-HIGH_NUMBER), Max(HIGH_NUMBER)]
   },
   bottom: {
     type: Number,
-    validators: [Min(-HIGH_NUMBER), Max(HIGH_NUMBER)],
+    validators: [Min(-HIGH_NUMBER), Max(HIGH_NUMBER)]
   },
   left: {
     type: Number,
-    validators: [Min(-HIGH_NUMBER), Max(HIGH_NUMBER)],
+    validators: [Min(-HIGH_NUMBER), Max(HIGH_NUMBER)]
   },
   height: {
     type: Number,
-    validators: [Min(-HIGH_NUMBER), Max(HIGH_NUMBER)],
+    validators: [Min(-HIGH_NUMBER), Max(HIGH_NUMBER)]
   },
   minHeight: {
     type: Number,
-    validators: [Min(-HIGH_NUMBER), Max(HIGH_NUMBER)],
+    validators: [Min(-HIGH_NUMBER), Max(HIGH_NUMBER)]
   },
   maxHeight: {
     type: Number,
-    validators: [Min(-HIGH_NUMBER), Max(HIGH_NUMBER)],
+    validators: [Min(-HIGH_NUMBER), Max(HIGH_NUMBER)]
   },
   width: {
     type: Number,
-    validators: [Min(-HIGH_NUMBER), Max(HIGH_NUMBER)],
+    validators: [Min(-HIGH_NUMBER), Max(HIGH_NUMBER)]
   },
   minWidth: {
     type: Number,
-    validators: [Min(-HIGH_NUMBER), Max(HIGH_NUMBER)],
+    validators: [Min(-HIGH_NUMBER), Max(HIGH_NUMBER)]
   },
   maxWidth: {
     type: Number,
-    validators: [Min(-HIGH_NUMBER), Max(HIGH_NUMBER)],
+    validators: [Min(-HIGH_NUMBER), Max(HIGH_NUMBER)]
   },
   backgroundColor: {
     type: String,

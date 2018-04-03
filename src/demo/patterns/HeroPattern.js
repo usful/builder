@@ -8,7 +8,8 @@ export default new DataPattern({
     {
       name: 'hero',
       type: Types.Image,
-      default: null
+      default: null,
+      example: ''
     }
   ]
 });

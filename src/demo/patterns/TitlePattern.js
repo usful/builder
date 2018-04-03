@@ -7,7 +7,8 @@ export default new DataPattern({
     {
       name: 'title',
       type: String,
-      default: 'Title'
+      default: 'Title',
+      example: 'Example Title'
     }
   ]
 });
