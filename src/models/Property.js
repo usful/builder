@@ -6,13 +6,16 @@ export default Models.add('Property', {
   id: String,
   version: {
     type: Number,
-    validators: [validators.required, validators.Min(0)]
+    validators: [validators.Min(0)],
+    default: 0
   },
   name: {
     type: String,
     validators: [validators.required]
   },
+  validators: [Object],
   value: Object,
+  op: String,
   type: Object,
   default: Object
   //validators: [Validator],

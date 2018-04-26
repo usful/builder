@@ -1,3 +1,5 @@
+import BlockDefinitionModel from '../../models/BlockDefinitionModel';
+
 export default new BlockDefinitionModel({
   id: 'UserCardBlockID',
   version: 12,
@@ -23,12 +25,6 @@ export default new BlockDefinitionModel({
     }
   ],
   publishes: [],
-  events: [
-    {
-      name: 'onClick',
-      func: ''
-    }
-  ],
   properties: [
     {
       name: 'name',
@@ -44,6 +40,7 @@ export default new BlockDefinitionModel({
   children: [
     {
       id: 'UserCardBlockID-1',
+      type: 'Instance',
       blockType: 'ViewBlock',
       style: {
         backgroundColor: '#ff0',
@@ -55,6 +52,7 @@ export default new BlockDefinitionModel({
       children: [
         {
           id: 'UserCardBlockID-2',
+          type: 'Instance',
           blockType: 'TextBlock',
           values: [
             {

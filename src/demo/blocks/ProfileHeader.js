@@ -7,22 +7,6 @@ import HeroPattern from '../patterns/HeroPattern';
 import LaneMotif from '../motifs/LaneMotif';
 import createClass from '../../renderer/createClass';
 
-const example = (
-  <div style={{ display: 'flex', flexDirection: 'column' }}>
-    <div style={{ backgroundImage: 'props.hero', height: '20em' }} />
-    <div style={{ padding: '2em', display: 'flex', flexDirection: 'row' }}>
-      <h1 style={{ flex: 0.6, paddingRight: '1em' }}>Title</h1>
-      <div
-        style={{
-          backgroundImage: 'props.hero',
-          backgroundSize: 'contain',
-          padding: '1em'
-        }}
-      />
-    </div>
-  </div>
-);
-
 export default createClass(
   new BlockDefinitionModel({
     id: 'ProfileHeaderBlock',

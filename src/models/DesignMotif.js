@@ -14,6 +14,10 @@ export default Models.add('DesignMotif', {
   fontFamily: Number,
   fontStyle: String,
   fontSize: Number,
-  fontWeight: String
+  fontWeight: String,
+  lineHeight: Number,
+  backgroundColor: String,
+  color: String,
+  secondaryColor: String,
 });
 

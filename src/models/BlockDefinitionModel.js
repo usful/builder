@@ -2,6 +2,9 @@ import Models from '../../models';
 import DataPattern from './DataPattern';
 import Property from './Property';
 import DesignMotif from './DesignMotif';
+import DataInput from './DataInput';
+import DataOutput from './DataOuput';
+
 //TODO: this should be a generic style model?
 import Style from './StyleModel';
 
@@ -27,26 +30,18 @@ import Style from './StyleModel';
 //onLongTap // onLongClick
 //onSwipe
 
-const Event = {
-  name: String,
-  values: [Object]
-};
-
-const Type = {
-  id: String,
-  version: Number,
-  name: String
-};
-
 const BlockDefinitionModel = Models.add('BlockDefinition', {
   id: String,
   version: Number,
   type: String,
+  bind: String,
   patterns: [DataPattern],
   motifs: [DesignMotif],
   state: [Property],
   properties: [Property],
-  events: [Event],
+  events: [Property],
+  dataInput: [DataInput],
+  dataOutput: [DataOutput],
   blockId: String,
   blockVersion: Number,
   blockType: String,

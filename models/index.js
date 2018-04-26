@@ -4,6 +4,7 @@ import validation from './validation';
 
 const CHANGE_THROTTLE = 1;
 const primitives = [String, Number, Boolean, Array, Date, Function, Object];
+
 const models = {};
 
 function fixReferences() {
@@ -79,53 +80,75 @@ function registerModel(name, newModel, opts) {
       continue;
     }
 
-    const descriptor = Object.getOwnPropertyDescriptor(newModel, key);
-
     //Property can be a getter/setter, a function, a simple definition,
     //a Model, a user defined Type, or a complex definition (wrapped in an object)
 
-    let prop = {
-      key: key
+    const prop = {
+      key: key,
+      isAcccessor: false,
+      isSpecial: true,
+      isModel: false,
+      isTypeFunction: false
     };
 
-    //Unpack array types. ie. names: [String]
-    if (Array.isArray(descriptor.value)) {
-      prop.type = descriptor.value[0];
-      prop.isArray = true;
-    } else if (descriptor.get || descriptor.set) {
-      //This is a getter or setter passed in.
-      prop.type = Function;
-      prop.isAccessor = true;
-      prop.set = descriptor.set;
-      prop.get = descriptor.get;
-    } else if (typeof descriptor.value === 'object' && descriptor.value.type) {
-      //This is a complex type definition being passed in.
-      const property = newModel[key];
+    const descriptor = Object.getOwnPropertyDescriptor(newModel, key);
 
-      prop = {
-        key: key,
-        ...property
-      };
-    } else if (typeof descriptor.value === 'string') {
-      //This is a lazy reference to another model being passed in.  Will be dealt with later.
-      prop.type = descriptor.value;
-    } else if (primitives.includes(descriptor.value)) {
-      //This is a primitive type, defined simply.
-      prop.type = descriptor.value;
-    } else if (
-      typeof descriptor.value === 'function' &&
-      descriptor.value.isModel
-    ) {
-      //This is a model definition that was passed in.
-      prop.type = descriptor.value;
-    } else if (typeof descriptor.value === 'function') {
-      //Some other kind of function passed in.
-      prop.type = Function;
-      prop.isAcccessor = false;
-      prop.function = descriptor.value;
-    } else {
-      throw new Error('Invalid type on', name, key);
-    }
+    const unpackArray = value => {
+      //Unpack array types. ie. names: [String]
+      if (Array.isArray(value)) {
+        prop.type = value[0];
+        prop.isArray = true;
+        return prop.type;
+      }
+
+      return value;
+    };
+
+    const unpackObject = value => {
+      if (typeof value === 'object' && value.type) {
+        //This is a complex type definition being passed in.
+        Object.assign(prop, value);
+
+        return unpackArray(value.type);
+      }
+
+      return value;
+    };
+
+    const unpackType = (value, descriptor) => {
+      if (descriptor.get || descriptor.set) {
+        //This is a getter or setter passed in.
+        prop.type = Function;
+        prop.isAccessor = true;
+        prop.set = descriptor.set;
+        prop.get = descriptor.get;
+      } else if (typeof value === 'string') {
+        //This is a lazy reference to another model being passed in.  Will be dealt with later.
+        prop.type = value;
+      } else if (primitives.includes(value)) {
+        //This is a primitive type, defined simply.
+        prop.type = value;
+      } else if (typeof value === 'function' && value.isModel) {
+        //This is a model definition that was passed in.
+        prop.type = value;
+        prop.isModel = true;
+      } else if (typeof value === 'function' && value.isSpecial) {
+        prop.type = value;
+        prop.isSpecial = true;
+      } else if (typeof value === 'function' && value.isType) {
+        prop.type = value;
+        prop.isTypeFunction = true;
+      } else if (typeof value === 'function') {
+        //Some other kind of function passed in.
+        prop.type = Function;
+        prop.isAcccessor = false;
+        prop.function = value;
+      } else {
+        throw new Error(`Invalid type on ${name}:${key} => ${value}`);
+      }
+    };
+
+    unpackType(unpackObject(unpackArray(newModel[key])), descriptor);
 
     definition.properties[prop.key] = prop;
     definition.props.push(prop);
@@ -157,15 +180,13 @@ function registerModel(name, newModel, opts) {
         }
       }
 
-      return new Proxy(data, {
+      const proxyOptions = {
         set(obj, prop, value, proxy) {
           if (RESERVED_SET.includes(prop)) {
             throw new ReservedPropertyNameError(
               `Cannot set ${prop}, it is reserved.`
             );
           }
-
-          //console.log(Date.now(), definition.name, 'setting', prop, value);
 
           for (let middleware of definition.middleware.set) {
             const response = middleware({
@@ -235,12 +256,12 @@ function registerModel(name, newModel, opts) {
               //could cause memory leaks from hanging references?
 
               if (!Array.isArray(value)) {
-                console.log(name, prop, obj, value);
+                //TODO: what about all the special array values? isSpecial, isModel, isType?
 
                 throw new Error(
                   `Attempting to set a non array to an array type on ${name}.${
                     property.key
-                  }`
+                    }`
                 );
               }
 
@@ -361,7 +382,15 @@ function registerModel(name, newModel, opts) {
 
           return value;
         }
-      });
+      };
+
+      try {
+        return new Proxy(data, proxyOptions);
+      } catch (e) {
+        console.error(`Creating proxy for ${name} failed.`, data);
+        console.error(e);
+        throw e;
+      }
     }
 
     const instanceProxy = close();

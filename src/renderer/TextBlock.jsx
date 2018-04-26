@@ -1,15 +1,17 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
-export default class TextBlock extends Component {
+export default class TextBlock extends PureComponent {
+  static defaultProps = {
+    style: {},
+    text: ''
+  };
+
   constructor(props) {
     super(props);
   }
 
   render() {
-    return (
-      <span style={this.props.style || {}}>
-        {this.props.text}
-      </span>
-    );
+    const { style, text } = this.props;
+    return <span style={style}>{text}</span>;
   }
 }
