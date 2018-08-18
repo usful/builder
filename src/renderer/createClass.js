@@ -1,9 +1,23 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import createReactClass from 'create-react-class';
 import { isBound, propertyArrayToObject } from '../helpers';
 import createStateProxy from './createStateProxy';
 import ViewBlock from './ViewBlock';
 import TextBlock from './TextBlock';
+
+//Should we port the Polymer version of builder to fix it?
+
+//Reference blocks by GUID instead of name:version
+//Save blocks to a database somewhere?
+//Load blocks on app load?
+    //How do we determine what blocks are needed by blocks? The dependency chain..
+      //Ie. ProfileBlock uses HeaderBlock, which uses TextBlock, etc.
+      //Should compute at save? Kind of like NPM does? Should we use NPM?
+//Mobile renderer.
+
+//UI Elements to compose these blocks
+  //UI to drag and drop blocks around and arrange them
+  //UI to enter in property values. ie. Title String goes in here.
 
 const Primitives = {
   ViewBlock: true,
@@ -88,7 +102,11 @@ export default function createClass(blockData) {
       //then we compute its block.values and block.style, otherwise we let
       //recursion handle it?
 
-      const blockProps = { ...this._derivedProps, instance: block, key: block.id };
+      const blockProps = {
+        ...this._derivedProps,
+        instance: block,
+        key: block.id
+      };
 
       parsedPropertyArrayToObject({
         arr: block.values || [],
@@ -103,6 +121,7 @@ export default function createClass(blockData) {
       if (block.style) {
         Object.keys(block.style).forEach(key => {
           const style = block.style[key];
+
           blockProps.style[key] = isBound(style)
             ? parseBinding({
                 obj: style,

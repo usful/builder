@@ -7,7 +7,6 @@ export default function createStateProxy({ component, state }) {
 
       obj[prop] = value;
 
-      console.log('createStateProxy setting', obj, prop, value);
       return true;
     },
     get(obj, prop) {
